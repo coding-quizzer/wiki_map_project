@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS points CASCADE;
+CREATE TABLE points (
+  id SERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
+  description TEXT,
+  map_id INTEGER REFERENCES maps(id)
+);

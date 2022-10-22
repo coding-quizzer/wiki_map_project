@@ -3,13 +3,7 @@ const router  = express.Router();
 const db = require('../db/connection');
 
 router.get('/', (req, res) => {
-  res.render('register');
+  res.render('create-map');
 });
-
-
-router.post('/'), (req, res) => {
-  res.redirect('/maps');
-// ERROR - Duplicate username OR blank password/username
-};
 
 module.exports = router;

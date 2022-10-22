@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const db = require('../db/connection');
 
 router.get('/', (req, res) => {
   res.render('users');
@@ -16,6 +17,6 @@ router.get('/:id', (req, res) => {
   const userId = req.params.id;
   const templateVars = { userId };
   res.render('user_profile');
-})
+});
 
 module.exports = router;

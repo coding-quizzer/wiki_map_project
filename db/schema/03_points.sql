@@ -4,5 +4,7 @@ CREATE TABLE points (
   title VARCHAR(255) NOT NULL,
   image VARCHAR(255) NOT NULL,
   description TEXT,
-  map_id INTEGER REFERENCES maps(id)
+  map_id INTEGER REFERENCES maps(id),
+  latitude REAL NOT NULL,
+  longitude  REAL NOT NULL
 );

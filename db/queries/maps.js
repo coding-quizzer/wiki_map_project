@@ -45,10 +45,30 @@ const getMapPoint = (mapId, pointId) => {
       return data.rows[0];
     });
 };
+/**
+ * options = {
+ * name:
+ * imgURL:
+ * }
+ *
+ **/
+
+const createMap = (options, user_id, latitude, longitude) => {
+  return db.query(`
+  INSERT INTO maps (name, user_id, latitude, longitude, img_url)
+  VALUES ($1, $2, $3, $4, $5)
+  RETURNING *;
+  `, [options.name, user_id, latitude, longitude, options.imgURL])
+  .then(data => {
+    console.log(data.rows[0]);
+    return data.rows[0];
+  });
+
+}
 
 
 
 
 
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint };
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap };

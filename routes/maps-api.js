@@ -26,5 +26,29 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/:id/points', (req, res) => {
+  userQueries.getMapPoints(req.params.id)
+    .then(points => {
+      res.json({ points });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+router.get('/:map_id/points/:point_id', (req, res) => {
+  userQueries.getMapPoint(req.params.map_id, req.params.point_id)
+    .then(point => {
+      res.json({ point });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+
+});
 
 module.exports = router;

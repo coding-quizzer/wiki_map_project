@@ -34,11 +34,13 @@ const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
+const mapApiRoutes = require('./routes/maps-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
+app.use('/api/maps', mapApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/maps', mapsRoutes);

@@ -21,4 +21,41 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  userQueries.getUsernameById(req.params.id)
+    .then(user => {
+      res.json({ user });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+router.get('/:id/maps', (req, res) => {
+  userQueries.getUserMaps(req.params.id)
+    .then(maps => {
+      res.json({ maps });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+
+router.get('/:id/favorites', (req, res) => {
+  userQueries.getUserFavorites(req.params.id)
+    .then(favorites => {
+      res.json({ favorites });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+})
+
 module.exports = router;

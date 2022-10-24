@@ -40,5 +40,26 @@ const getUserMaps = (userId) => {
     });
 };
 
+const addFavorite = (userId, mapId) => {
+  return db.query(`
+  INSERT INTO favorites (user_id, map_id)
+  VALUES ($1, $2)
+  RETURNING *;
+  `, [userId, mapId])
+  .then(data => {
+    return data.rows[0];
+  });
+};
 
-module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername };
+const registerUser = (first_name, last_name, username, password) => {
+  return db.query(`
+  INSERT INTO users (first_name, last_name, username, password)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;`, [first_name, last_name, username, password])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+
+module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername, addFavorite, registerUser };

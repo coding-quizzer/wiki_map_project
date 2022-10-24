@@ -66,9 +66,28 @@ const createMap = (options, user_id, latitude, longitude) => {
 
 }
 
+/**
+ * options = {
+ * title:
+ * description:
+ * imgURL:
+ * }
+ *
+ **/
 
 
+const createPoint = (options, mapId, latitude, longitude) => {
+  return db.query(`
+  INSERT INTO points (title, img_url, description, map_id, latitude, longitude)
+  VALUES ($1, $2, $3, $4, $5, $6)
+  RETURNING *;` , [options.title, options.imgURL, options.description, mapId, latitude, longitude])
+    .then(data => {
+      console.log(data.rows[0]);
+      return data.rows[0];
+    });
+};
 
+createPoint({ title: 'Best Tree', imgURL: 'img', description: 'This tree is so nice'}, 2, 43.099771, -79.076123)
 
 
 module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap };

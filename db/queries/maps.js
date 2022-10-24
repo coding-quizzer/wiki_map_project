@@ -1,12 +1,17 @@
 const db = require('../connection');
 
 const getMaps = () => {
-  return db.query(`SELECT * FROM maps`)
+  return db.query(`
+  SELECT maps.id, maps.name, img_url, users.username
+  FROM maps
+  JOIN users ON user_id = users.id`)
     .then(data => {
       console.log(data.rows);
       return data.rows;
     });
 };
+
+getMaps();
 
 const getMap = (id) => {
   return db.query(`
@@ -86,8 +91,6 @@ const createPoint = (options, mapId, latitude, longitude) => {
       return data.rows[0];
     });
 };
-
-createPoint({ title: 'Best Tree', imgURL: 'img', description: 'This tree is so nice'}, 2, 43.099771, -79.076123)
 
 
 module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap };

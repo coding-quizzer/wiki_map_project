@@ -5,5 +5,5 @@ CREATE TABLE maps(
   user_id INTEGER REFERENCES users(id),
   latitude REAL,
   longitude REAL,
-  img_url VARCHAR(255)
+  img_url VARCHAR(255) NOT NULL DEFAULT '/images/gray-square-hi.png'
 );

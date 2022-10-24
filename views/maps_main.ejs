@@ -10,6 +10,9 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
@@ -18,9 +21,20 @@
 </head>
 
 <body>
-  <h1>MAP NAME</h1>
-  <button id="fetch-maps">Fetch Maps via AJAX</button>
-  <ul id="users"></ul>
+  <h1>VIEW ALL MAPS</h1>
+  <main id="maps-container">
+    <article class="map-item">
+      <header>
+        <img class="img_url" src="">
+        <h2 class="map-name">map name</h2>
+        <i class="fa-regular fa-star"></i>
+      </header>
+      <footer>
+        <p class="createdByUsername">Created by: Username</p>
+      </footer>
+    </article>
+
+  </main>
 </body>
 
 </html>

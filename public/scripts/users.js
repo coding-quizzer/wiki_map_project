@@ -1,17 +1,56 @@
 // Client facing scripts here
 $(() => {
-  $('#fetch-users').on('click', () => {
+  const userId = 4;
+
     $.ajax({
       method: 'GET',
-      url: '/api/users'
+      url: `/api/users/${userId}`
     })
-    .done((response) => {
-      const $usersList = $('#users');
-      $usersList.empty();
-
-      for(const user of response.users) {
-        $(`<li class="user">`).text(user.username).appendTo($usersList);
-      }
+    .then((response) => {
+      const user = response.user;
+      console.log(user);
+      const $userHeading = $('#profile-title').text(user.username);
     });
-  });
+
+    $.ajax({
+      method: 'GET',
+      url: `/api/users/${userId}/favorites`
+    })
+    .then(response => {
+      const favorites = response.favorites;
+      const $favorites = $('#favorites');
+      for (const favorite of favorites) {
+        $(`<li class="favorite">`).text(`${favorite.name}`).appendTo($favorites);
+      }
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
+
+    $.ajax({
+      method: 'GET',
+      url: `/api/users/${userId}/maps`
+    })
+    .then(response => {
+      const maps = response.maps;
+      const $maps = $('#my-maps');
+      for (const map of maps) {
+        $(`<li class="map">`).text(`${map.name}`).appendTo($maps);
+      }
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
+
+
+
 });
+
+// $usersList.empty();
+// for(const user of response.users) {
+//   const { first_name, last_name, username } = user;
+//   const fullname = `${first_name} ${last_name}`;
+//   const favorites = `${favorites}`;
+//   const myMaps = `${maps_id}`
+//   $(`<li class="user">`).text(`${fullname} has the username ${username}`).appendTo($usersList);
+// }

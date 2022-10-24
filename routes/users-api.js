@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  userQueries.getUsernameById(req.params.id)
+  userQueries.getUserById(req.params.id)
     .then(user => {
       res.json({ user });
     })

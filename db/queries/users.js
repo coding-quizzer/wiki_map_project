@@ -7,18 +7,21 @@ const getUsers = () => {
     });
 };
 
-const getUsernameById = (id) => {
+const getUserById = (id) => {
   return db.query('SELECT * FROM users WHERE id = $1;',[id])
     .then(data => {
-      console.log(data.rows[0]);
       return data.rows[0];
     })
 };
 
 const getUserFavorites = (userId) => {
-  return db.query('SELECT * FROM favorites WHERE user_id = $1;' , [userId])
+  return db.query(`
+    SELECT maps.*
+    FROM favorites
+    JOIN maps ON map_id = maps.id
+    WHERE favorites.user_id = $1;
+    ` , [userId])
     .then(data => {
-      console.log(data.rows);
       return data.rows;
     })
 };
@@ -26,11 +29,8 @@ const getUserFavorites = (userId) => {
 const getUserMaps = (userId) => {
   return db.query('SELECT * FROM maps WHERE user_id = $1;', [userId])
     .then(data => {
-      console.log(data.rows);
       return data.rows
     })
 };
-getUsernameById(1);
-getUserMaps(1);
-getUserFavorites(1);
-module.exports = { getUsers, getUsernameById, getUserFavorites, getUserMaps };
+
+module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps };

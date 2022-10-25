@@ -1,7 +1,6 @@
 $(() => {
   const $mapTitle = $('.map_title');
   const map_id = $mapTitle.text();
-  console.log(map_id);
   $.ajax({
     method: 'GET',
     url: `/api/maps/${map_id}`

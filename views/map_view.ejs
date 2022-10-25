@@ -10,13 +10,22 @@
   <!-- Vendor CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+     integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+     crossorigin=""/>
+
 
   <!-- Vendor JS-->
   <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+     integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+     crossorigin=""></script>
 
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/maps_api.css" />
+
 
   <!-- App JS-->
   <script src="/scripts/view_a_map.js"></script>
@@ -25,6 +34,7 @@
 <body>
   <h1>Viewing One Map</h1>
   <h2 class="map_title"><%= id %></h2>
+  <div id="map"></div>
   <ul id="points"></u>
 </body>
 

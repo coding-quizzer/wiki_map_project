@@ -26,28 +26,28 @@ $(() => {
     const mapCoords = [mapData.latitude, mapData.longitude];
     const map = L.map('map').setView(mapCoords, 13)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
     for (const point of points) {
-      const coords = [point.latitude, point.longitude];
-      const marker = L.marker(coords).addTo(map);
-      const pointName = point.title;
+      const marker = L.marker([point.latitude, point.longitude]).addTo(map);
       const $popupContent = $('<section>').addClass('display-point');
       const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
-      const $title = $('<h4>').text(pointName);
+      const $title = $('<h4>').text(point.title);
       const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
       const $description = $('<p>').text(point.description).appendTo($popupContent);
       marker.bindPopup($popupContent[0]);
 
-       $('button.point').on('click', function(event) {
-        const pointId = ($(this).attr('point_id'));
-        $.get(`/api/maps/${map_id}/points/${pointId}`)
-        .then (data => {
-          const point = data.point;
-          map.panTo([point.latitude, point.longitude])
-        });
-       })
     }
+
+    $('button.point').on('click', function(event) {
+      const pointId = ($(this).attr('point_id'));
+      $.get(`/api/maps/${map_id}/points/${pointId}`)
+      .then (data => {
+        const point = data.point;
+        map.panTo([point.latitude, point.longitude])
+      });
+    });
   })
 })

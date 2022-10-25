@@ -1,13 +1,14 @@
 $(() => {
   const $mapTitle = $('.map_title');
   const map_id = $mapTitle.text();
+  let mapData = {};
   $.ajax({
     method: 'GET',
     url: `/api/maps/${map_id}`
   })
   .then(response => {
-    const map = response.map;
-    $mapTitle.text(map.name);
+    mapData = response.map;
+    $mapTitle.text(mapData.name);
     return $.get(`/api/maps/${map_id}/points`);
   })
   .then(data => {
@@ -17,16 +18,19 @@ $(() => {
     for(const point of points) {
       $('<li class="point">').text(point.title).appendTo($pointList);
     }
+    return points;
 
   })
-  .then(data => {
-    const map = L.map('map').setView([50.445210, -104.618896], 13)
+  .then(points => {
+    const mapCoords = [mapData.latitude, mapData.longitude];
+    const map = L.map('map').setView(mapCoords, 13)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
-
+    for (const point of points) {
+      const coords = [point.latitude, point.longitude];
+      const marker = L.marker(coords).addTo(map);
+    }
   })
-
-
 })

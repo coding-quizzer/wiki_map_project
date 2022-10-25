@@ -51,4 +51,9 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 
 });
 
+router.post('/:id'), (req, res) => {
+  console.log(req.body);
+  res.send('Point Received');
+}
+
 module.exports = router;

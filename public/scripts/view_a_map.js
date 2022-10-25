@@ -40,6 +40,40 @@ $(() => {
       marker.bindPopup($popupContent[0]);
 
     }
+    const popup = L.popup()
+    const $addPointForm = $(`
+    <form id = "new-point" action="/api/maps/${map_id}" method="POST">
+      <input
+        type="text"
+        class = "post-point-name"
+        name="point-name"
+        placeholder="title"
+      />
+      <button class="add-point" type="submit">Post</button>
+    </form>
+    `)
+
+    const onMapClick = function(e){
+      console.log(e.latlng);
+        popup
+         .setLatLng(e.latlng)
+        .setContent($addPointForm[0])
+        .addTo(map);
+    };
+
+    map.on('click', onMapClick);
+    console.log($addPointForm.find('button.add-point'));
+    const $submitButton = $addPointForm.find('button.add-point');
+
+    $submitButton.submit( function(event) {
+      console.log(event)
+      event.preventDefault();
+      console.log('this')
+      console.log(this);
+      const $inputField = $(this).children('.post-point-name')[0];
+      console.log('input field')
+      console.log( $inputField);
+    });
 
     $('button.point').on('click', function(event) {
       const pointId = ($(this).attr('point_id'));
@@ -49,5 +83,6 @@ $(() => {
         map.panTo([point.latitude, point.longitude])
       });
     });
+
   })
 })

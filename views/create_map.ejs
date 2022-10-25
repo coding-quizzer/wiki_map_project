@@ -4,9 +4,9 @@
 <head>
   <title>Create Map</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
@@ -14,10 +14,22 @@
   <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/users.js"></script>
+  <script defer src="/scripts/maps.js"></script>
 </head>
 
 <body>
+  <!-- Nav Bar (fixed at top)-->
+  <nav class="navbar">
+    <div class="navbar-container container">
+      <ul class="menu-items">
+        <li><a href="/maps">View Maps</a></li>
+        <li><a href="/users">My Profile</a></li>
+        <li><a href="#">Create Map</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+      <h1 class="logo">Wiki Maps</h1>
+    </div>
+  </nav>
   <h1>Create Map</h1>
   <ul id="users"></ul>
 </body>

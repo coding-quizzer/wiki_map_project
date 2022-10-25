@@ -10,6 +10,8 @@ $(() => {
       mapData = response.map;
       $mapTitle.text(mapData.name);
       $('title').text(mapData.name);
+
+
       return $.get(`/api/maps/${map_id}/points`);
     })
     .then(data => {
@@ -17,6 +19,7 @@ $(() => {
       console.log(data);
       const $pointList = $('#points');
       for (const point of points) {
+
         $('<button class="point">').attr('point_id', point.id).text(point.title).appendTo($pointList);
       }
       return points;

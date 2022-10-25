@@ -14,10 +14,10 @@ $(() => {
       <header>
       <img class="img_url">
       <h2 class="map-name"></h2>
-      <i class="fa-regular fa-star"></i>
+      <p class="createdBy">Created by: Username</p>
       </header>
       <footer>
-      <p class="createdBy">Created by: Username</p>
+      <i class="fa-solid fa-star"></i>
       </footer>
       </article>
       `);

@@ -2,20 +2,20 @@
 $(() => {
   const userId = 4;
 
-    $.ajax({
-      method: 'GET',
-      url: `/api/users/${userId}`
-    })
+  $.ajax({
+    method: 'GET',
+    url: `/api/users/${userId}`
+  })
     .then((response) => {
       const user = response.user;
       console.log(user);
       const $userHeading = $('#profile-title').text(user.username);
     });
 
-    $.ajax({
-      method: 'GET',
-      url: `/api/users/${userId}/favorites`
-    })
+  $.ajax({
+    method: 'GET',
+    url: `/api/users/${userId}/favorites`
+  })
     .then(response => {
       const favorites = response.favorites;
       const $favorites = $('#favorites');
@@ -27,10 +27,10 @@ $(() => {
       console.error(err.stack);
     });
 
-    $.ajax({
-      method: 'GET',
-      url: `/api/users/${userId}/maps`
-    })
+  $.ajax({
+    method: 'GET',
+    url: `/api/users/${userId}/maps`
+  })
     .then(response => {
       const maps = response.maps;
       const $maps = $('#my-maps');

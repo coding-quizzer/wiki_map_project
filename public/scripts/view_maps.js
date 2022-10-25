@@ -4,12 +4,12 @@ $(() => {
     method: 'GET',
     url: `/api/maps`
   })
-  .then((response) => {
-    const maps = response.maps;
-    // console.log(maps);
-    for (let map of maps) {
+    .then((response) => {
+      const maps = response.maps;
+      // console.log(maps);
+      for (let map of maps) {
 
-      const $mapItem = $(`
+        const $mapItem = $(`
       <article class="map-item">
       <header>
       <img class="img_url">
@@ -22,15 +22,15 @@ $(() => {
       </article>
       `);
 
-      const $img = $mapItem.find('img').attr('src', map.img_url);
-      const $mapName = $mapItem.find('.map-name').text(map.name);
-      const $createdBy = $mapItem.find('.createdBy').text('Created by: ' + map.username);
+        const $img = $mapItem.find('img').attr('src', map.img_url);
+        const $mapName = $mapItem.find('.map-name').text(map.name);
+        const $createdBy = $mapItem.find('.createdBy').text('Created by: ' + map.username);
 
-      $mapItem.appendTo('#maps-container');
+        $mapItem.appendTo('#maps-container');
 
-    }
+      }
 
-  });
+    });
 
 
 });

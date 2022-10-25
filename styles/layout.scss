@@ -1,6 +1,59 @@
 // See: https://sass-lang.com/
 
-body,
-html {
-  margin: 0;
+// body,
+// html {
+//   margin: 0;
+// }
+
+//Nav Bar
+.html{
+  font-size: 62.5%;
 }
+
+.container{
+  width: 90%;
+  margin: auto;
+}
+
+.navbar{
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  opacity: 0.85;
+  z-index: 100;
+}
+
+.navbar-container{
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  align-items: center;
+}
+
+.menu-items{
+  order: 2;
+  display: flex;
+}
+.logo{
+  order: 1;
+  font-size: 2.3rem;
+}
+
+.menu-items li{
+  list-style: none;
+  margin-left: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.navbar a{
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover{
+  color: #117964;
+}
+

@@ -33,8 +33,10 @@ $(() => {
       const coords = [point.latitude, point.longitude];
       const marker = L.marker(coords).addTo(map);
       const pointName = point.title;
-      const $popupContent = $('<section>');
-      const $title = $('<h5>').text(pointName).appendTo($popupContent);
+      const $popupContent = $('<section>').addClass('display-point');
+      const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
+      const $title = $('<h4>').text(pointName);
+      const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
       const $description = $('<p>').text(point.description).appendTo($popupContent);
       marker.bindPopup($popupContent[0]);
 

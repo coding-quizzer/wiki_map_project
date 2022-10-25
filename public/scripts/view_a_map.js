@@ -17,7 +17,7 @@ $(() => {
     console.log(data);
     const $pointList = $('#points');
     for(const point of points) {
-      $('<li class="point">').text(point.title).appendTo($pointList);
+      $('<button class="point">').attr('point_id', point.id).text(point.title).appendTo($pointList);
     }
     return points;
 
@@ -37,6 +37,15 @@ $(() => {
       const $title = $('<h5>').text(pointName).appendTo($popupContent);
       const $description = $('<p>').text(point.description).appendTo($popupContent);
       marker.bindPopup($popupContent[0]);
+
+       $('button.point').on('click', function(event) {
+        const pointId = ($(this).attr('point_id'));
+        $.get(`/api/maps/${map_id}/points/${pointId}`)
+        .then (data => {
+          const point = data.point;
+          map.panTo([point.latitude, point.longitude])
+        });
+       })
     }
   })
 })

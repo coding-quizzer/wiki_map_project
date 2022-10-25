@@ -1,6 +1,6 @@
 // Client facing scripts here
 $(() => {
-  const userId = 4;
+  const userId = 2;
 
   $.ajax({
     method: 'GET',

@@ -1,6 +1,7 @@
 // Client facing scripts here
 $(() => {
-  const userId = 2;
+  const $profileHeader = $('#profile-title');
+  const userId = $profileHeader.text();
 
   $.ajax({
     method: 'GET',

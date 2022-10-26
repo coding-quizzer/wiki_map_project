@@ -10,11 +10,12 @@ const router  = express.Router();
 const db = require('../db/connection');
 
 router.get('/', (req, res) => {
-  res.render('users');
+  templateVars = { userId: 1};
+  res.render('users', templateVars);
 });
 
 router.get('/:id', (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.id || 2;
   const templateVars = { userId };
   res.render('user_profile');
 });

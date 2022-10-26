@@ -54,9 +54,10 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 
 
 router.post('/', (req, res) => {
-  console.log(res.body);
+  console.log(req.body);
+  const options = {...req.body, latitude:62.4748444, longitude:-114.4790338};
   const userId = req.session.userId;
-  userQueries.createMap(req.body, userId)
+  userQueries.createMap(options, userId || 1)
   .then(map => {
     res.redirect(`/maps/${map.id}`);
   })

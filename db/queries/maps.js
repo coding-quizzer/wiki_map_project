@@ -61,6 +61,8 @@ const getMapPoint = (mapId, pointId) => {
  **/
 
 const createMap = (options, user_id) => {
+  console.log('options', options);
+  console.log([options.name, user_id, options.latitude, options.longitude, options.imgURL]);
   return db.query(`
   INSERT INTO maps (name, user_id, latitude, longitude, img_url)
   VALUES ($1, $2, $3, $4, $5)

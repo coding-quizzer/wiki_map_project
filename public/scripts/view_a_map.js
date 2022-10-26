@@ -19,10 +19,17 @@ $(() => {
     for(const point of points) {
       $('<button class="point">').attr('point_id', point.id).text(point.title).appendTo($pointList);
     }
-    return points;
-
-  })
+    return points;})
   .then(points => {
+    const displayPoint = point => {
+      const marker = L.marker([point.latitude, point.longitude]).addTo(map);
+      const $popupContent = $('<section>').addClass('display-point');
+      const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
+      const $title = $('<h4>').text(point.title);
+      const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
+      const $description = $('<p>').text(point.description).appendTo($popupContent);
+      marker.bindPopup($popupContent[0]);
+    }
     const mapCoords = [mapData.latitude, mapData.longitude];
     const map = L.map('map').setView(mapCoords, 13)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -31,13 +38,7 @@ $(() => {
     }).addTo(map);
 
     for (const point of points) {
-      const marker = L.marker([point.latitude, point.longitude]).addTo(map);
-      const $popupContent = $('<section>').addClass('display-point');
-      const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
-      const $title = $('<h4>').text(point.title);
-      const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
-      const $description = $('<p>').text(point.description).appendTo($popupContent);
-      marker.bindPopup($popupContent[0]);
+      displayPoint(point);
 
     }
     const popup = L.popup()
@@ -90,7 +91,11 @@ $(() => {
       $.post(`/api/maps/${map_id}`, $.param(query))
         .then(data => {
           $addPointForm[0].reset();
-          console.log(data)});
+          console.log(data);
+          displayPoint(data);
+
+
+      })
     })
 
     $('button.point').on('click', function(event) {
@@ -103,5 +108,5 @@ $(() => {
       });
     });
 
-  })
-})
+  });
+});

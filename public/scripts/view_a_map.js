@@ -29,6 +29,7 @@ $(() => {
       const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
       const $description = $('<p>').text(point.description).appendTo($popupContent);
       marker.bindPopup($popupContent[0]);
+      return marker;
     }
     const mapCoords = [mapData.latitude, mapData.longitude];
     const map = L.map('map').setView(mapCoords, 13)
@@ -41,38 +42,39 @@ $(() => {
       displayPoint(point);
 
     }
-    const popup = L.popup()
     const $addPointForm = $(`
     <form id = "new-point" action="/api/maps/${map_id}" method="POST">
-      <input
-        type="text"
-        class = "post-point-name"
-        name="point-name"
-        placeholder="title"
-      />
-      <input
-        type="text"
-        class="post-point-description"
-        name="point-description"
-        placeholder="description"
-        />
-        <input
-          type="text"
-          class="post-point-photo-url"
-          name="point-photo-url"
-          placeholder="Photo URL"
-        />
+    <input
+    type="text"
+    class = "post-point-name"
+    name="point-name"
+    placeholder="title"
+    />
+    <input
+    type="text"
+    class="post-point-description"
+    name="point-description"
+    placeholder="description"
+    />
+    <input
+    type="text"
+    class="post-point-photo-url"
+    name="point-photo-url"
+    placeholder="Photo URL"
+    />
 
-      <button class="add-point" type="submit">Post</button>
+    <button class="add-point" type="submit">Post</button>
     </form>
     `)
     let click_coords = [];
     const onMapClick = function(e){
       console.log(e.latlng);
-        popup
-         .setLatLng(e.latlng)
+      const popup = L.popup()
+        .setLatLng(e.latlng)
         .setContent($addPointForm[0])
-        .addTo(map);
+        .openOn(map);
+        console.log($addPointForm);
+        console.log(popup);
         click_coords = e.latlng;
 
     };
@@ -82,19 +84,19 @@ $(() => {
 
     $addPointForm.on('submit', function(event) {
       event.preventDefault();
-      const $nameField = $(this).children('.post-point-name');
-      console.log(click_coords);
       const query = $(this).serializeArray();
-      query.push({name: 'latitude',  value: click_coords.lat});
-      query.push({name: 'longitude', value: click_coords.lng});
-      query.push({name: 'map_id', value: map_id});
+      console.log($addPointForm);
+      query.push(
+        {name: 'latitude',  value: click_coords.lat},
+        {name: 'longitude', value: click_coords.lng},
+        {name: 'map_id', value: map_id}
+      );
       $.post(`/api/maps/${map_id}`, $.param(query))
         .then(data => {
           $addPointForm[0].reset();
           console.log(data);
-          displayPoint(data);
-
-
+          const newMarker = displayPoint(data);
+          newMarker.openPopup();
       })
     })
 

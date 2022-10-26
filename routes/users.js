@@ -9,15 +9,23 @@ const express = require('express');
 const router  = express.Router();
 const db = require('../db/connection');
 
+const templateVars = {};
+
+router.use((req, res, next) => {
+  templateVars.userId = req.session.userId;
+  next();
+});
+
+
 router.get('/', (req, res) => {
-  templateVars = { userId: 1};
+  templateVars.id = req.params.id;
   res.render('users', templateVars);
 });
 
 router.get('/:id', (req, res) => {
-  const userId = req.params.id || 2;
-  const templateVars = { userId };
-  res.render('user_profile');
+  templateVars.id = req.params.id;
+  res.render('user_profile', templateVars);
 });
+
 
 module.exports = router;

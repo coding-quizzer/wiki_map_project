@@ -2,13 +2,22 @@ const express = require('express');
 const router  = express.Router();
 const db = require('../db/connection');
 
+const templateVars = {};
+
+router.use((req, res, next) => {
+  templateVars.userId = req.session.userId;
+  next();
+});
+
 router.get('/', (req, res) => {
-  res.render('register');
+  templateVars.id = req.params.id;
+  res.render('register', templateVars);
 });
 
 
 router.post('/'), (req, res) => {
-  res.redirect('/maps');
+  templateVars.id = req.params.id;
+  res.redirect('/maps', templateVars);
 // ERROR - Duplicate username OR blank password/username
 };
 

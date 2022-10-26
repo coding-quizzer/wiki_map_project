@@ -15,9 +15,9 @@ const getUserById = (id) => {
 };
 
 const getUserByUsername = (username) => {
-  return db.query(`SELECT * FROM users WHERE username = $1;`, [username])
+  return db.query('SELECT * FROM users WHERE username = $1;', [username])
     .then(data => {
-      return data.rows[0]
+      return data.rows[0];
     });
 };
 
@@ -36,7 +36,7 @@ const getUserFavorites = (userId) => {
 const getUserMaps = (userId) => {
   return db.query('SELECT * FROM maps WHERE user_id = $1;', [userId])
     .then(data => {
-      return data.rows
+      return data.rows;
     });
 };
 

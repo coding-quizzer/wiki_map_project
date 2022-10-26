@@ -9,6 +9,13 @@ const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
 
+const templateVars = {};
+
+router.use((req, res, next) => {
+  templateVars.userId = req.session.userId;
+  next();
+});
+
 router.get('/', (req, res) => {
   userQueries.getUsers()
     .then(users => {
@@ -45,7 +52,6 @@ router.get('/:id/maps', (req, res) => {
     });
 });
 
-
 router.get('/:id/favorites', (req, res) => {
   userQueries.getUserFavorites(req.params.id)
     .then(favorites => {
@@ -56,6 +62,6 @@ router.get('/:id/favorites', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
-})
+});
 
 module.exports = router;

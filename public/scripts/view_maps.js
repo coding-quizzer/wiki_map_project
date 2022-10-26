@@ -11,14 +11,16 @@ $(() => {
 
         const $mapItem = $(`
       <article class="map-item">
-      <header>
+      <header class="info-container">
       <img class="img_url">
+      </header>
+      <div class="name-creator">
       <h2 class="map-name"></h2>
       <p class="createdBy">Created by: Username</p>
-      </header>
-      <footer>
+      </div>
+      <div class="foot">
       <i class="fa-solid fa-star"></i>
-      </footer>
+      </div>
       </article>
       `);
 

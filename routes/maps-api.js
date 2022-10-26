@@ -51,6 +51,24 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 
 });
 
+
+
+
+router.post('/', (req, res) => {
+  console.log(req.body);
+  const options = {...req.body, latitude:62.4748444, longitude:-114.4790338};
+  const userId = req.session.userId;
+  userQueries.createMap(options, userId || 1)
+  .then(map => {
+    res.redirect(`/maps/${map.id}`);
+  })
+  .catch(err => {
+    res
+    .status(500)
+    .json({ error: err.message });
+  });
+});
+
 router.post('/:id', (req, res) => {
   const pointInfo = req.body;
   console.log('---pointInfo---');
@@ -69,4 +87,6 @@ router.post('/:id', (req, res) => {
   })
 });
 
+router.post('/:map_id/points', (req, res) => {
+});
 module.exports = router;

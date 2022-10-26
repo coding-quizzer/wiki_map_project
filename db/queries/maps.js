@@ -54,16 +54,20 @@ const getMapPoint = (mapId, pointId) => {
  * options = {
  * name:
  * imgURL:
+ * latitude:
+ * longitude:
  * }
  *
  **/
 
-const createMap = (options, user_id, latitude, longitude) => {
+const createMap = (options, user_id) => {
+  console.log('options', options);
+  console.log([options.name, user_id, options.latitude, options.longitude, options.imgURL]);
   return db.query(`
   INSERT INTO maps (name, user_id, latitude, longitude, img_url)
   VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
-  `, [options.name, user_id, latitude, longitude, options.imgURL])
+  `, [options.name, user_id, options.latitude, options.longitude, options.imgURL])
   .then(data => {
     console.log(data.rows[0]);
     return data.rows[0];
@@ -76,16 +80,19 @@ const createMap = (options, user_id, latitude, longitude) => {
  * title:
  * description:
  * imgURL:
+ * latitude:
+ * longitude:
+ * mapID:
  * }
  *
  **/
 
 
-const createPoint = (options, mapId, latitude, longitude) => {
+const createPoint = (options) => {
   return db.query(`
   INSERT INTO points (title, img_url, description, map_id, latitude, longitude)
   VALUES ($1, $2, $3, $4, $5, $6)
-  RETURNING *;` , [options.title, options.imgURL, options.description, mapId, latitude, longitude])
+  RETURNING *;` , [options.title, options.imgURL, options.description, options.mapId, options.latitude, options.longitude])
     .then(data => {
       console.log(data.rows[0]);
       return data.rows[0];

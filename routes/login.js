@@ -18,18 +18,18 @@ router.post('/', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   if (!username || !password) {
-    res.status(400).send("Email or Password input is empty, please enter a valid email and password");
+    res.status(400).send("Username or Password input is empty, please enter a valid email and password");
     return;
   }
   getUserByUsername(username)
     .then(data => {
-      if (data.password !== password) {
+      if (!data || data.password !== password) {
         res.status(400).send("Incorrect Username or Password");
         return;
       }
       req.session.userId = data.id;
       templateVars.userId = req.session.userId;
-      res.redirect(200, '/maps');
+      res.redirect('/maps');
     });
 
 });

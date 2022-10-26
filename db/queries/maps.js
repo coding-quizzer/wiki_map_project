@@ -99,5 +99,33 @@ const createPoint = (options) => {
     });
 };
 
+/**
+ *
+ * @param {{}} options
+ * {
+ *    title: string
+ *    imgURL: string
+ *    description: string
+ *    pointID: integer
+ * }
+ */
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint };
+const editPoint = (options) => {
+  return db.query(`
+    UPDATE points
+    SET title = $1,
+        img_url = $2,
+        description = $3
+    WHERE id = $4
+    RETURNING *
+  `, [options.title, options.imgURL, options.description, options.pointID])
+  .then(data => {
+    console.log(data.rows[0]);
+    return data.rows[0];
+  });
+};
+
+
+
+
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint };

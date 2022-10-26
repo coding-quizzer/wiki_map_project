@@ -6,6 +6,8 @@
 
     const map = initializeMap();
 
+    console.log(map_id);
+
     $.ajax({
       method: 'GET',
       url: `/api/maps/${map_id}`
@@ -60,7 +62,6 @@
     `);
         let click_coords = [];
         const onMapClick = function (e) {
-          console.log(e.latlng);
           const popup = L.popup()
             .setLatLng(e.latlng)
             .setContent($addPointForm[0])
@@ -83,6 +84,7 @@
             { name: 'longitude', value: click_coords.lng },
             { name: 'map_id', value: map_id }
           );
+          console.log("post map id", map_id);
           $.post(`/api/maps/${map_id}`, $.param(query))
             .then(data => {
               $addPointForm[0].reset();

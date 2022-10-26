@@ -13,6 +13,15 @@
   width: 100%;
   padding-top: 2em;
 }
+
+#create-map-form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 2em;
+}
+
 .form-control {
   display: flex;
   justify-content: center;

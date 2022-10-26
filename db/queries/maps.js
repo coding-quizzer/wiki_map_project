@@ -113,12 +113,12 @@ const createPoint = (options) => {
 const editPoint = (options) => {
   return db.query(`
     UPDATE points
-    SET title = $1,
-        img_url = $2,
-        description = $3
-    WHERE id = $4
+    SET title = $2,
+        img_url = $3,
+        description = $4
+    WHERE id = $1
     RETURNING *
-  `, [options.title, options.imgURL, options.description, options.pointID])
+  `, [options.pointID, options.title, options.imgURL, options.description])
   .then(data => {
     console.log(data.rows[0]);
     return data.rows[0];
@@ -126,6 +126,14 @@ const editPoint = (options) => {
 };
 
 
+editPoint({
+  pointID: 9,
+  title: 'coffee shop',
+  imgURL: 'https://images.unsplash.com/photo-1530174883092-c2a7aa3f1cfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80',
+  description: 'nice place for a cup of coffee'
+})
+.then(data => console.log(data))
+.catch (err => console.error(err.message));
 
 
 module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint };

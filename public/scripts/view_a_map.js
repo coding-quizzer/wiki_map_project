@@ -49,33 +49,52 @@ $(() => {
         name="point-name"
         placeholder="title"
       />
+      <input
+        type="text"
+        class="post-point-description"
+        name="point-description"
+        placeholder="description"
+        />
+        <input
+          type="text"
+          class="post-point-photo-url"
+          name="point-photo-url"
+          placeholder="Photo URL"
+        />
+
       <button class="add-point" type="submit">Post</button>
     </form>
     `)
-
+    let click_coords = [];
     const onMapClick = function(e){
       console.log(e.latlng);
         popup
          .setLatLng(e.latlng)
         .setContent($addPointForm[0])
         .addTo(map);
+        click_coords = e.latlng;
+
     };
 
     map.on('click', onMapClick);
-    console.log($addPointForm.find('button.add-point'));
     const $submitButton = $addPointForm.find('button.add-point');
 
-    $submitButton.submit( function(event) {
-      console.log(event)
+    $addPointForm.on('submit', function(event) {
       event.preventDefault();
-      console.log('this')
-      console.log(this);
-      const $inputField = $(this).children('.post-point-name')[0];
-      console.log('input field')
-      console.log( $inputField);
-    });
+      const $nameField = $(this).children('.post-point-name');
+      console.log(click_coords);
+      const query = $(this).serializeArray();
+      query.push({name: 'latitude',  value: click_coords.lat});
+      query.push({name: 'longitude', value: click_coords.lng});
+      query.push({name: 'map_id', value: map_id});
+      $.post(`/api/maps/${map_id}`, $.param(query))
+        .then(data => {
+          $addPointForm[0].reset();
+          console.log(data)});
+    })
 
     $('button.point').on('click', function(event) {
+      console.log(event);
       const pointId = ($(this).attr('point_id'));
       $.get(`/api/maps/${map_id}/points/${pointId}`)
       .then (data => {

@@ -76,8 +76,11 @@ router.post('/:id', (req, res) => {
   userQueries.createPoint({
     title: pointInfo['point-name'],
     description: pointInfo['point-description'],
-    imgURL: pointInfo['point-photo-url']
-  }, pointInfo.map_id, pointInfo.latitude, pointInfo.longitude)
+    imgURL: pointInfo['point-photo-url'],
+    mapID: pointInfo.map_id,
+    latitude: pointInfo.latitude,
+    longitude: pointInfo.longitude
+  })
   .then(point => {
     res.send(point);
   })

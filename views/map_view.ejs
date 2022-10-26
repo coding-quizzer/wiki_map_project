@@ -26,32 +26,19 @@
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/maps_api.css" />
 
-
   <!-- App JS-->
   <script src="/scripts/view_a_map.js"></script>
 </head>
 
 <body>
-
-   <!-- Nav Bar (fixed at top)-->
-   <nav class="navbar">
-    <div class="navbar-container container">
-        <ul class="menu-items">
-          <li><a href="/maps">View Maps</a></li>
-          <li><a href="/users">My Profile</a></li>
-            <li><a href="#">Create Map</a></li>
-            <li><a href="#">Logout</a></li>
-        </ul>
-        <h1 class="logo">Wiki Maps</h1>
-    </div>
-</nav>
-
+  <%- include('partials/_header') %>
 <header class="head">
   <h2 class="map_title"><%= id %></h2>
 </header>
 
 <div id="map"></div>
 <ul id="points"></u>
+  
 </body>
 
 </html>

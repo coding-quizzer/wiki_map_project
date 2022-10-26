@@ -1,0 +1,29 @@
+#register-form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 2em;
+}
+
+#login-form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 2em;
+}
+.form-control {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin-top: 0.5em;
+
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  margin-top: 0.5em;
+}

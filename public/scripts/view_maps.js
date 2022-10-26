@@ -10,6 +10,7 @@ $(() => {
       for (let map of maps) {
 
         const $mapItem = $(`
+      <form class="maps-view" method="GET" action="/maps/${map.id}">
       <article class="map-item">
       <header class="info-container">
       <img class="img_url">
@@ -22,6 +23,7 @@ $(() => {
       <i class="fa-solid fa-star"></i>
       </div>
       </article>
+      </form>
       `);
 
         const $img = $mapItem.find('img').attr('src', map.img_url);
@@ -31,6 +33,15 @@ $(() => {
         $mapItem.appendTo('#maps-container');
 
       }
+
+      $('.foot').on('click', function(event) {
+        event.stopPropagation();
+      });
+
+      $('article.map-item').on('click', function (event) {
+        $(this).parents('form').trigger('submit');
+      });
+
 
     });
 

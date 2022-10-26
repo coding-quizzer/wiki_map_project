@@ -12,30 +12,23 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/forms.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
 </head>
 
 <body>
-   <!-- Nav Bar (fixed at top)-->
-   <nav class="navbar">
-    <div class="navbar-container container">
-        <ul class="menu-items">
-          <li><a href="/maps">View Maps</a></li>
-          <li><a href="/users">My Profile</a></li>
-            <li><a href="#">Create Map</a></li>
-            <li><a href="#">Logout</a></li>
-        </ul>
-        <h1 class="logo">Wiki Maps</h1>
-    </div>
-</nav>
+  <%- include('partials/_header') %>
 <header class="head">
-
   <h1>Login</h1>
-  <ul id="users"></ul>
-
 </header>
+<form id="login-form" action="/login" method="POST">
+  <input class="form-control" type="text" name="username" placeholder="Username">
+  <input class="form-control" type="password" name="password" placeholder="Password">
+  <button type="submit" class="btn btn-secondary">Login</button>
+</form>
+
 </body>
 
 </html>

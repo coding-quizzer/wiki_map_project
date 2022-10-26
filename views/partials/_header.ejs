@@ -1,11 +1,17 @@
 <nav class="navbar">
   <div class="navbar-container container">
     <ul class="menu-items">
-      <li><a href="/maps">View Maps</a></li>
-      <li><a href="/users">My Profile</a></li>
-      <li><a href="/maps/new">Create Map</a></li>
-      <li><a href="#">Logout</a></li>
-    </ul>
+      <% if(userId) { %>
+              <li><a href="/maps">View Maps</a></li>
+              <li><a href="/users">My Profile</a></li>
+              <li><a href="/maps/new">Create Map</a></li>
+              <li><form action="/login/logout" method="POST" ><button type="submit">Logout</button></form></li>
+      <% } else { %>
+              <li><a href="/maps">View Maps</a></li>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+        <% } %>
+      </ul>
     <h1 class="logo">Wiki Maps</h1>
   </div>
 </nav>

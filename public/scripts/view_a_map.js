@@ -32,11 +32,11 @@
         const mapCoords = [mapData.latitude, mapData.longitude];
         map.setView(mapCoords, 13);
 
-        for (const point of points) {
-          displayPoint(map, point);
+          for (const point of points) {
+            displayPoint(map, point);
 
-        }
-        const $addPointForm = $(`
+          }
+          const $addPointForm = $(`
     <form id = "new-point" action="/api/maps/${map_id}" method="POST">
       <input
         type="text"
@@ -70,10 +70,10 @@
           console.log(popup);
           click_coords = e.latlng;
 
-        };
+          };
 
-        map.on('click', onMapClick);
-        const $submitButton = $addPointForm.find('button.add-point');
+          map.on('click', onMapClick);
+          const $submitButton = $addPointForm.find('button.add-point');
 
         $addPointForm.on('submit', function (event) {
           event.preventDefault();
@@ -105,7 +105,7 @@
             });
         });
 
-      });
+        });
   });
 
   const initializeMap = () => {

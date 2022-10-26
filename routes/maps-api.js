@@ -51,4 +51,22 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 
 });
 
+router.post('/:id', (req, res) => {
+  const pointInfo = req.body;
+  console.log('---pointInfo---');
+  console.log(pointInfo);
+  userQueries.createPoint({
+    title: pointInfo['point-name'],
+    description: pointInfo['point-description'],
+    imgURL: pointInfo['point-photo-url']
+  }, pointInfo.map_id, pointInfo.latitude, pointInfo.longitude)
+  .then(point => {
+    res.send(point);
+  })
+  .catch(e => {
+    console.error(e.message);
+    res.send(e);
+  })
+});
+
 module.exports = router;

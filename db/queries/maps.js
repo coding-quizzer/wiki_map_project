@@ -93,4 +93,4 @@ const createPoint = (options, mapId, latitude, longitude) => {
 };
 
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap };
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint };

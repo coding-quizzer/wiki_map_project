@@ -6,15 +6,17 @@ router.get('/', (req, res) => {
   res.render('maps_main');
 });
 
+router.get('/new', (req, res) => {
+  //const templateVars = { userId: req.session.userId };
+  res.render('create_map');
+});
+
 router.get('/:id', (req, res) => {
   const id = req.params.id;
   const templateVars = { id };
   res.render('map_view', templateVars);
 });
 
-router.get('/new', (req, res) => {
-  res.render('create_map.js');
-});
 
 router.get('/:id/api/points', (req, res) => {
   const id = req.params.id;

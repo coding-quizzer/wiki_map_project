@@ -51,4 +51,23 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 
 });
 
+
+
+router.post('/', (req, res) => {
+  console.log(res.body);
+  const userId = req.session.userId;
+  userQueries.createMap(req.body, userId)
+  .then(map => {
+    res.redirect(`/maps/${map.id}`);
+  })
+  .catch(err => {
+    res
+    .status(500)
+    .json({ error: err.message });
+  });
+});
+
+router.post('/:map_id/points', (req, res) => {
+  userQueries
+})
 module.exports = router;

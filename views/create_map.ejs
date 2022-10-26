@@ -14,24 +14,23 @@
   <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/maps.js"></script>
+  <script defer src="/scripts/users.js"></script>
+
 </head>
 
 <body>
-  <!-- Nav Bar (fixed at top)-->
-  <nav class="navbar">
-    <div class="navbar-container container">
-      <ul class="menu-items">
-        <li><a href="/maps">View Maps</a></li>
-        <li><a href="/users">My Profile</a></li>
-        <li><a href="#">Create Map</a></li>
-        <li><a href="#">Logout</a></li>
-      </ul>
-      <h1 class="logo">Wiki Maps</h1>
-    </div>
-  </nav>
   <h1>Create Map</h1>
   <ul id="users"></ul>
+  <form id="create-map-form" action="/api/maps" method="POST">
+    <div class="map-name">
+      <input type="text" name="name" placeholder="Name of your map">
+    </div>
+    <div class="map-url">
+      <input type="text" name="img_url" placeholder="Photo URL link!">
+      <button type="submit" class="submit-button">Submit</button>
+    </div>
+  </form>
+
 </body>
 
 </html>

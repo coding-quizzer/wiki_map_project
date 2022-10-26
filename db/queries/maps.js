@@ -80,16 +80,17 @@ const createMap = (options, user_id) => {
  * imgURL:
  * latitude:
  * longitude:
+ * mapID:
  * }
  *
  **/
 
 
-const createPoint = (options, mapId) => {
+const createPoint = (options) => {
   return db.query(`
   INSERT INTO points (title, img_url, description, map_id, latitude, longitude)
   VALUES ($1, $2, $3, $4, $5, $6)
-  RETURNING *;` , [options.title, options.imgURL, options.description, mapId, options.latitude, options.longitude])
+  RETURNING *;` , [options.title, options.imgURL, options.description, options.mapId, options.latitude, options.longitude])
     .then(data => {
       console.log(data.rows[0]);
       return data.rows[0];

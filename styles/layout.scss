@@ -57,3 +57,22 @@
   color: #117964;
 }
 
+.button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+
+  padding: 0%;
+}
+
+.button:hover {
+  color: #117964;
+}

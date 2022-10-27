@@ -39,8 +39,7 @@
             displayPoint(map, point, mapIDToPopup);
 
           }
-          const $addPointSection = $(`
-    <section>
+          const $addPointForm = $(`
     <form id = "new-point" action="/api/maps/${map_id}" method="POST">
       <input
         type="text"
@@ -65,14 +64,12 @@
       <button class="add-point" type="submit">Post</button>
       <button type="button" class="set-center">Make Center</button>
       </form>
-      </section>
     `);
 
-        const $addPointForm = $addPointSection.children('#new-point');
         const onMapClick = function (e) {
           const popup = L.popup()
             .setLatLng(e.latlng)
-            .setContent($addPointSection[0])
+            .setContent($addPointForm[0])
             .openOn(map);
           console.log($addPointForm);
           console.log(popup);

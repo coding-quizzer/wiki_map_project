@@ -113,6 +113,7 @@
           .then(data => {
             console.log(data);
             centerMap(map, centerPoint, [data.latitude, data.longitude]);
+            map.closePopup();
           })
           .catch(err => console.error(err.message));
          });

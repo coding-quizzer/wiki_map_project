@@ -21,6 +21,7 @@ router.post('/', (req, res) => {
     return;
   }
   const hashedPassword = bcrypt.hashSync(password, 10);
+  console.log(hashedPassword);
   getUserByUsername(username)
     .then(data => {
       if (data) {

@@ -93,12 +93,18 @@ router.post('/:id', (req, res) => {
 
 router.post('/:map_id/center', (req, res) => {
   userQueries.changeMapCenter(req.body)
-  .then(map => {
-    res.send(map)
-  })
-  .catch(e => {
-    console.error(e.message);
-    res.send(e);
-  })
+    .then(map => {
+      res.send(map);
+    })
+    .catch(e => {
+      console.error(e.message);
+      res.send(e);
+    });
 });
+
+router.post('/maps', (req, res) => {
+  const favorite = req.body;
+  console.log('FAVORITES', favorite);
+});
+
 module.exports = router;

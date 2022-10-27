@@ -20,7 +20,7 @@ $(() => {
       <p class="createdBy">Created by: Username</p>
       </div>
       <div class="foot">
-      <i class="fa-solid fa-star"></i>
+      <form action="/maps" method="POST"><button class="fa-solid fa-star" type="submit"></button></form>
       </div>
       </article>
       </form>

@@ -1,24 +1,36 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const db = require('../db/connection');
+const { getUserByUsername, registerUser } = require('../db/queries/users');
 
-const templateVars = {};
-
-router.use((req, res, next) => {
-  templateVars.userId = req.session.userId;
-  next();
-});
+const templateVars = { userId: "" };
 
 router.get('/', (req, res) => {
-  templateVars.id = req.params.id;
   res.render('register', templateVars);
 });
 
 
-router.post('/'), (req, res) => {
-  templateVars.id = req.params.id;
-  res.redirect('/maps', templateVars);
-// ERROR - Duplicate username OR blank password/username
-};
+router.post('/', (req, res) => {
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const username = req.body.username;
+  const password = req.body.password;
+  if (!username || !password || !firstName || !lastName) {
+    res.status(400).send("One or more input fields are empty, please fill out all input fields");
+    return;
+  }
+  getUserByUsername(username)
+    .then(data => {
+      if (data) {
+        res.status(400).send("Username has been taken, please choose a new username!");
+        return;
+      }
+      registerUser(firstName, lastName, username, password)
+        .then(user => {
+          req.session.userId = user.id;
+          res.redirect('/maps');
+        });
+    });
+});
 
 module.exports = router;

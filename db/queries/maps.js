@@ -99,5 +99,21 @@ const createPoint = (options) => {
     });
 };
 
+const changeMapCenter = (mapID, latitude, longitude) => {
+  return db.query(`
+  UPDATE maps
+  SET latitude = $2,
+      longitude = $3
+  WHERE id = $1
+  RETURNING *`, [mapID, latitude, longitude])
+  .then(data => {
+    console.log(data.rows[0]);
+    return data.rows[0];
+  });
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint };
+
+};
+changeMapCenter(1, 40.8080, -80.4040);
+
+
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, changeMapCenter };

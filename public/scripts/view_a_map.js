@@ -3,6 +3,7 @@
     const $mapTitle = $('.map_title');
     const map_id = $mapTitle.text();
     let mapData = {};
+    const mapIDToPopup = {};
 
     const map = initializeMap();
 
@@ -33,7 +34,7 @@
         map.setView(mapCoords, 13);
 
           for (const point of points) {
-            displayPoint(map, point);
+            displayPoint(map, point, mapIDToPopup);
 
           }
           const $addPointForm = $(`
@@ -90,7 +91,7 @@
               $addPointForm[0].reset();
               console.log(data);
               addPointButton($('#points'), data);
-              const newMarker = displayPoint(map, data);
+              const newMarker = displayPoint(map, data, mapIDToPopup);
               newMarker.openPopup();
             });
         });
@@ -102,7 +103,7 @@
             .then(data => {
               const point = data.point;
               map.panTo([point.latitude, point.longitude]);
-              map.openPopup([point.latitude, point.longitude]);
+              mapIDToPopup[pointId].openPopup();
             });
         });
 
@@ -119,7 +120,7 @@
     return map;
   }
 
-  const displayPoint = (map, point) => {
+  const displayPoint = (map, point, idToPopup) => {
     const marker = L.marker([point.latitude, point.longitude]).addTo(map);
     const $popupContent = $('<section>').addClass('display-point');
     const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
@@ -127,6 +128,7 @@
     const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
     const $description = $('<p>').text(point.description).appendTo($popupContent);
     marker.bindPopup($popupContent[0]);
+    idToPopup[point.id] = marker;
     return marker;
   };
 

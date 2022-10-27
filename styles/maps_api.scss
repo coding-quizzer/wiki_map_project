@@ -20,6 +20,12 @@
     width: 100%;
   }
 
+  // Center Icon
+  .leaflet-div-icon {
+    border-radius: 50%;
+    background-color: rgb(255, 77, 77);
+  }
+
   img{
     height: 32px;
     width: 32px;

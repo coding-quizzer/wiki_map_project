@@ -31,6 +31,7 @@
       .then(points => {
 
         const mapCoords = [mapData.latitude, mapData.longitude];
+        const centerMarker = markCenter(map,mapCoords);
         map.setView(mapCoords, 13);
 
           for (const point of points) {
@@ -131,6 +132,15 @@
     idToPopup[point.id] = marker;
     return marker;
   };
+
+  const markCenter = (map, mapCenter) => {
+    const centerIcon = L.divIcon({ /* className: "center-icon" */ });
+    const marker = L.marker(mapCenter, {icon: centerIcon})
+    .addTo(map)
+    .bindTooltip('Map center');
+    return centerIcon;
+  }
+
 
   const addPointButton = (pointList, point) => {
     $('<button class="point">').attr('point_id', point.id).text(point.title).appendTo(pointList);

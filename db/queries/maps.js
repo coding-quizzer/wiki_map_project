@@ -19,9 +19,9 @@ const getMap = (id) => {
     WHERE id = $1
     `, [id])
     .then(data => {
-    console.log(data.rows[0]);
-    return data.rows[0];
-  });
+      console.log(data.rows[0]);
+      return data.rows[0];
+    });
 };
 
 
@@ -68,12 +68,12 @@ const createMap = (options, user_id) => {
   VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
   `, [options.name, user_id, options.latitude, options.longitude, options.imgURL])
-  .then(data => {
-    console.log(data.rows[0]);
-    return data.rows[0];
-  });
+    .then(data => {
+      console.log(data.rows[0]);
+      return data.rows[0];
+    });
 
-}
+};
 
 /**
  * options = {
@@ -100,7 +100,6 @@ const createPoint = (options) => {
 };
 
 /**
-<<<<<<< HEAD
  * options = {
  * mapID:
  * latitude:
@@ -115,7 +114,7 @@ const changeMapCenter = (options) => {
   SET latitude = $2,
       longitude = $3
   WHERE id = $1
-  RETURNING *`, [options.mapID, options.latitude, options.longitude])
+  RETURNING *`, [options.mapID, options.latitude, options.longitude]);
 };
 /**
  * @param {{}} options
@@ -138,10 +137,10 @@ const editPoint = (options) => {
     RETURNING *
   `, [options.pointID, options.title, options.imgURL, options.description])
 
-  .then(data => {
-    console.log(data.rows[0]);
-    return data.rows[0];
-  });
+    .then(data => {
+      console.log(data.rows[0]);
+      return data.rows[0];
+    });
 };
 
 const isFavorite = (userID, mapID) => {
@@ -149,11 +148,7 @@ const isFavorite = (userID, mapID) => {
   SELECT * FROM favorites
   WHERE user_id = $1 AND map_id = $2
   `, [userID, mapID])
-  .then(data => console.log("isFavorite", !!data.rows[0]))
-}
+    .then(data => console.log("isFavorite", !!data.rows[0]));
+};
 
-changeMapCenter(1, 40.8080, -80.4040);
-
-isFavorite(1, 2);
-
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint };
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, isFavorite};

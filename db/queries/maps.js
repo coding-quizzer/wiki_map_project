@@ -143,12 +143,14 @@ const editPoint = (options) => {
     });
 };
 
-const isFavorite = (userID, mapID) => {
+const userFavorites = (userID) => {
   return db.query(`
   SELECT * FROM favorites
-  WHERE user_id = $1 AND map_id = $2
-  `, [userID, mapID])
-    .then(data => console.log("isFavorite", !!data.rows[0]));
+  WHERE user_id = $1
+  `, [userID])
+    .then(data => console.log("userFavorites", data.rows));
 };
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, isFavorite};
+userFavorites(4);
+
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, userFavorites};

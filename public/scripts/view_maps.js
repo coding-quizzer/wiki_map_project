@@ -6,8 +6,13 @@ $(() => {
   const favMapIDs = [];
   $.get(`/api/users/${userId}/favorites`)
     .then(data => {
+      if (!userId) return $.get('/api/maps');
       console.log(data.favoriteIDs);
       favMapIDs.push(...data.favoriteIDs);
+      return $.get('/api/maps');
+    })
+    .catch(err => {
+      console.error(err.message)
       return $.get('/api/maps');
     })
     .then((response) => {

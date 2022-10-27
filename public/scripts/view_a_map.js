@@ -35,10 +35,6 @@
 
         centerMap(map, centerPoint, [mapData.latitude, mapData.longitude]);
 
-        // const mapCoords = [mapData.latitude, mapData.longitude];
-        // const centerMarker = markCenter(map,mapCoords);
-        // map.setView(mapCoords, 13);
-
           for (const point of points) {
             displayPoint(map, point, mapIDToPopup);
 
@@ -71,7 +67,6 @@
       <button class="set-center">Make Center</button>
       <section>
     `);
-        // let click_coords = {};
         const onMapClick = function (e) {
           const popup = L.popup()
             .setLatLng(e.latlng)
@@ -110,12 +105,13 @@
 
         const $centerButton = $addPointForm.children('button.set-center');
         $centerButton.on('click', function (event) {
-          const query = [{name: 'latitude', value: clickCoords.lat}, {name: 'longitude', value: clickCoords.lng}, {name: 'mapID', value: map_id}];
-
-          console.log('query',query);
-          $.post(`/api/maps/${map_id}/center`, $.param(query))
+          const data = {
+            latitude: clickCoords.lat,
+            longitude: clickCoords.lng,
+            mapID: map_id
+          };
+          $.post(`/api/maps/${map_id}/center`, $.param(data))
           .then(data => {
-            console.log(data);
             centerMap(map, centerPoint, [data.latitude, data.longitude]);
           })
           .catch(err => console.error(err.message));

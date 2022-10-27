@@ -20,7 +20,7 @@ $(() => {
       <p class="createdBy">Created by: Username</p>
       </div>
       <div class="foot">
-      <form action="/maps" method="POST"><button class="fa-solid fa-star" type="submit"></button></form>
+      <form class="fav-form" action="/maps" method="POST"><button class="fa-solid fa-star" type="submit"></button></form>
       </div>
       </article>
       </form>
@@ -42,7 +42,18 @@ $(() => {
         $(this).parents('form').trigger('submit');
       });
 
-
+      $('foot').on('submit', ".fav-form", function(event) {
+        event.preventDefault();
+        const data = $(this).serialize();
+        $.ajax({
+          data: data,
+          method: "POST",
+          url: '/maps',
+          success: function(data) {
+            alert("Map saved to favorites!" + data);
+          }
+        });
+      });
     });
 
 

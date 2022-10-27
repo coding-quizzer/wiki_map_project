@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const db = require('../db/connection');
 const { getUserByUsername } = require('../db/queries/users');
 
@@ -26,6 +27,9 @@ router.post('/', (req, res) => {
       if (!data || data.password !== password) {
         res.status(400).send("Incorrect Username or Password");
         return;
+      }
+      if (!bcrypt.compareSync(password, username.password)) {
+        res.status(400).send("Incorrect Username or Password");
       }
       req.session.userId = data.id;
       templateVars.userId = req.session.userId;

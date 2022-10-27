@@ -68,13 +68,13 @@ router.get('/:id/favorites', (req, res) => {
 router.get('/:id/favorites/names', (req, res) => {
   userQueries.getUserFavorites(req.params.id)
     .then(favorite => res.json(favorite));
-})
+});
 
 router.post('/:id/favorites', (req, res) => {
   const favorite = req.body;
   userQueries.addFavorite(favorite.userId, favorite.mapID)
   .then((favorite) => {
-    res.send(favorite)
+    res.send(favorite);
   })
   .catch(err => console.error(err));
 });
@@ -83,6 +83,6 @@ router.delete('/:user_id/favorites/:map_id', (req, res) => {
   const [userID, mapID] = [req.params.user_id, req.params.map_id]
   userQueries.removeFavorite(userID, mapID)
   .then(favorite => res.send('Removed Favorite'));
-})
+});
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
+const bcrypt = require('bcrypt');
 const { getUserByUsername, registerUser } = require('../db/queries/users');
 
 const templateVars = { userId: "" };
@@ -19,13 +20,14 @@ router.post('/', (req, res) => {
     res.status(400).send("One or more input fields are empty, please fill out all input fields");
     return;
   }
+  const hashedPassword = bcrypt.hashSync(password, 10);
   getUserByUsername(username)
     .then(data => {
       if (data) {
         res.status(400).send("Username has been taken, please choose a new username!");
         return;
       }
-      registerUser(firstName, lastName, username, password)
+      registerUser(firstName, lastName, username, hashedPassword)
         .then(user => {
           req.session.userId = user.id;
           res.redirect('/maps');

@@ -102,6 +102,7 @@
             .then(data => {
               const point = data.point;
               map.panTo([point.latitude, point.longitude]);
+              map.openPopup([point.latitude, point.longitude]);
             });
         });
 

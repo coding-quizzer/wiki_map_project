@@ -21,16 +21,15 @@ router.post('/', (req, res) => {
   }
   getUserByUsername(username)
     .then(data => {
-      console.log("SSDSSSSSSSSSSSSSSS" , data);
-      if (data.username === username) {
+      if (data) {
         res.status(400).send("Username has been taken, please choose a new username!");
         return;
       }
-      console.log("First name = ", firstName, "Last Name = ", lastName, "username = ", username, "password = ", password);
-      registerUser(firstName, lastName, username, password);
-      req.session.userId = data.id;
-      templateVars.userId = req.session.userId;
-      res.redirect('/maps');
+      registerUser(firstName, lastName, username, password)
+        .then(user => {
+          req.session.userId = user.id;
+          res.redirect('/maps');
+        });
     });
 });
 

@@ -57,7 +57,7 @@ const registerUser = (first_name, last_name, username, password) => {
   VALUES ($1, $2, $3, $4)
   RETURNING *;`, [first_name, last_name, username, password])
     .then(data => {
-      return data.rows;
+      return data.rows[0];
     });
 };
 

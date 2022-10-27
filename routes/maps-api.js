@@ -91,6 +91,11 @@ router.post('/:id', (req, res) => {
 
 });
 
+router.post('/maps' , (req, res) => {
+  const favorite = req.body;
+  console.log('FAVORITES', favorite);
+})
+
 router.post('/:map_id/points', (req, res) => {
 });
 module.exports = router;

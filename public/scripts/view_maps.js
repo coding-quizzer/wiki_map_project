@@ -1,9 +1,12 @@
 $(() => {
 
-  $.ajax({
-    method: 'GET',
-    url: `/api/maps`
-  })
+  const userId = $('#title').text();
+  console.log(userId);
+  $('#title').text("VIEW ALL MAPS");
+  let favoriteMaps = {};
+  $.get(`/api/users/${userId}/favorites`)
+  .then(data => console.log(data));
+  $.get('/api/maps')
     .then((response) => {
       const maps = response.maps;
       // console.log(maps);
@@ -34,7 +37,7 @@ $(() => {
 
       }
 
-      $('.foot').on('click', function(event) {
+      $('.fa-solid fa-star').on('click', function(event) {
         event.stopPropagation();
       });
 

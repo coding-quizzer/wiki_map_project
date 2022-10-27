@@ -102,7 +102,7 @@ router.post('/:map_id/center', (req, res) => {
     });
 });
 
-router.post('/maps', (req, res) => {
+router.post('/maps/favorites', (req, res) => {
   const favorite = req.body;
   console.log('FAVORITES', favorite);
 });

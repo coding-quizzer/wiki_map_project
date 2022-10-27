@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/users.js"></script>
   <script defer src="/scripts/view_maps.js"></script>
 
 </head>
@@ -26,7 +25,7 @@
   <%- include('partials/_header') %>
 <header class="head">
 
-  <h1 id="title">VIEW ALL MAPS</h1>
+  <h1 id="title"><%= userId %></h1>
 </header>
   <main id="maps-container">
   </main>

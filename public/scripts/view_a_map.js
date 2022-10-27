@@ -65,14 +65,14 @@
       <button class="add-point" type="submit">Post</button>
       </form>
       <button class="set-center">Make Center</button>
-      <section>
+      </section>
     `);
 
         const $addPointForm = $addPointSection.children('#new-point');
         const onMapClick = function (e) {
           const popup = L.popup()
             .setLatLng(e.latlng)
-            .setContent($addPointForm[0])
+            .setContent($addPointSection[0])
             .openOn(map);
           console.log($addPointForm);
           console.log(popup);

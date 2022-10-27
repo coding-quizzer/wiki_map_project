@@ -102,9 +102,5 @@ router.post('/:map_id/center', (req, res) => {
     });
 });
 
-router.post('/maps', (req, res) => {
-  const favorite = req.body;
-  console.log('FAVORITES', favorite);
-});
 
 module.exports = router;

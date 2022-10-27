@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const db = require('../db/connection');
+const { addFavorite } = require('../db/queries/users');
 
 const templateVars = {};
 
@@ -32,4 +33,8 @@ router.get('/:id/api/points', (req, res) => {
   res.send(points, templateVars);
 });
 
+router.post('/' , (req, res) => {
+  
+  addFavorite(favorite)
+})
 module.exports = router;

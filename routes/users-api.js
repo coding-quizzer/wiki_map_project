@@ -79,4 +79,10 @@ router.post('/:id/favorites', (req, res) => {
   .catch(err => console.error(err));
 });
 
+router.delete('/:user_id/favorites/:map_id', (req, res) => {
+  const [userID, mapID] = [req.params.user_id, req.params.map_id]
+  userQueries.removeFavorite(userID, mapID)
+  .then(favorite => res.send('Removed Favorite'));
+})
+
 module.exports = router;

@@ -58,22 +58,20 @@ $(() => {
               console.log(data);
               $(this).addClass('favorited');
             });
+          } else {
+            $.ajax({
+              type: 'DELETE',
+              url: `/api/users/${userId}/favorites/${map.id}`
+            })
+            .then(response => {
+              console.log(response);
+              $(this).removeClass('favorited');
+            })
+
           }
         });
 
       }
-
-      $('.fa-solid.fa-star').on('click', function (event) {
-        event.stopPropagation();
-        // if (!($(this).hasClass('favorited'))) {
-        //   $.post(`api/users/${userId}/favorites`, {
-        //     userId,
-        //     mapID: $(this).attr('map_id')
-        //   })
-        //   .then(data => console.log(data));
-        // }
-
-      });
 
       $('article.map-item').on('click', function (event) {
         $(this).parents('form').trigger('submit');

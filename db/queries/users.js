@@ -85,4 +85,4 @@ const registerUser = (first_name, last_name, username, password) => {
 };
 
 
-module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername, getFavorites, addFavorite, registerUser };
+module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername, getFavorites, addFavorite, registerUser, removeFavorite };

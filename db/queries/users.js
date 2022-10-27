@@ -62,6 +62,16 @@ const getFavorites = (userID) => {
     });
 };
 
+const removeFavorite = (userID, mapID) => {
+  return db.query(`
+  DELETE FROM favorites
+  WHERE user_id = $1 AND map_id = $2
+  RETURNING *
+  `, [userID, mapID]).then(data => {
+    console.log('Favorite removed');
+    return data.rows[0];
+  });
+};
 
 
 const registerUser = (first_name, last_name, username, password) => {

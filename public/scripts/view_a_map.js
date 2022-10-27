@@ -76,6 +76,7 @@
           console.log($addPointForm);
           console.log(popup);
           clickCoords = {...e.latlng};
+          console.log(clickCoords);
 
         };
 
@@ -107,13 +108,7 @@
         console.log('clickCoords', clickCoords);
         console.log($centerButton);
         $centerButton.on('click', function (event) {
-          console.log(event);
-          const query1 = JSON.stringify({
-            latitude: clickCoords.lat,
-            longitude: clickCoords.lng,
-             'map_id': map_id
-          });
-          const query = [{name: 'latitude', value: clickCoords.lat}, {name: 'longitude', value: clickCoords.lng}, {name: 'map_id', value: map_id}];
+          const query = [{name: 'latitude', value: clickCoords.lat}, {name: 'longitude', value: clickCoords.lng}, {name: 'mapID', value: map_id}];
 
           console.log('query',query);
           $.post(`/api/maps/${map_id}/center`, $.param(query))

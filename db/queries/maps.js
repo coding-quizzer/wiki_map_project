@@ -125,15 +125,14 @@ const editPoint = (options) => {
   });
 };
 
+const isFavorite = (userID, mapID) => {
+  return db.query(`
+  SELECT * FROM favorites
+  WHERE user_id = $1 AND map_id = $2
+  `, [userID, mapID])
+  .then(data => console.log("isFavorite", !!data.rows[0]))
+}
 
-editPoint({
-  pointID: 9,
-  title: 'coffee shop',
-  imgURL: 'https://images.unsplash.com/photo-1530174883092-c2a7aa3f1cfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80',
-  description: 'nice place for a cup of coffee'
-})
-.then(data => console.log(data))
-.catch (err => console.error(err.message));
-
+isFavorite(1, 2);
 
 module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint };

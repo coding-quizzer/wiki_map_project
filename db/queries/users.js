@@ -51,6 +51,29 @@ const addFavorite = (userId, mapId) => {
   });
 };
 
+const getFavorites = (userID) => {
+  return db.query(`
+  SELECT map_id FROM favorites
+  WHERE user_id = $1
+  `, [userID])
+    .then(data => {
+      console.log("userFavorites", data.rows)
+      return data.rows;
+    });
+};
+
+const removeFavorite = (userID, mapID) => {
+  return db.query(`
+  DELETE FROM favorites
+  WHERE user_id = $1 AND map_id = $2
+  RETURNING *
+  `, [userID, mapID]).then(data => {
+    console.log('Favorite removed');
+    return data.rows[0];
+  });
+};
+
+
 const registerUser = (first_name, last_name, username, password) => {
   return db.query(`
   INSERT INTO users (first_name, last_name, username, password)
@@ -62,4 +85,4 @@ const registerUser = (first_name, last_name, username, password) => {
 };
 
 
-module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername, addFavorite, registerUser };
+module.exports = { getUsers, getUserById, getUserFavorites, getUserMaps, getUserByUsername, getFavorites, addFavorite, registerUser, removeFavorite };

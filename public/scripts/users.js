@@ -15,10 +15,9 @@ $(() => {
 
   $.ajax({
     method: 'GET',
-    url: `/api/users/${userId}/favorites`
+    url: `/api/users/${userId}/favorites/names`
   })
-    .then(response => {
-      const favorites = response.favorites;
+    .then(favorites => {
       const $favorites = $('#favorites');
       for (const favorite of favorites) {
         $(`<li class="favorite">`).text(`${favorite.name}`).appendTo($favorites);

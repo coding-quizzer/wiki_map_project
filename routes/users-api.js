@@ -53,9 +53,10 @@ router.get('/:id/maps', (req, res) => {
 });
 
 router.get('/:id/favorites', (req, res) => {
-  userQueries.getUserFavorites(req.params.id)
-    .then(favorites => {
-      res.json({ favorites });
+  userQueries.getFavorites(req.params.id)
+    .then(favArr => {
+      const favoriteIDs = favArr.map(favObj => Object.values(favObj)[0]);
+      res.json({ favoriteIDs });
     })
     .catch(err => {
       res
@@ -63,5 +64,25 @@ router.get('/:id/favorites', (req, res) => {
         .json({ error: err.message });
     });
 });
+
+router.get('/:id/favorites/names', (req, res) => {
+  userQueries.getUserFavorites(req.params.id)
+    .then(favorite => res.json(favorite));
+})
+
+router.post('/:id/favorites', (req, res) => {
+  const favorite = req.body;
+  userQueries.addFavorite(favorite.userId, favorite.mapID)
+  .then((favorite) => {
+    res.send(favorite)
+  })
+  .catch(err => console.error(err));
+});
+
+router.delete('/:user_id/favorites/:map_id', (req, res) => {
+  const [userID, mapID] = [req.params.user_id, req.params.map_id]
+  userQueries.removeFavorite(userID, mapID)
+  .then(favorite => res.send('Removed Favorite'));
+})
 
 module.exports = router;

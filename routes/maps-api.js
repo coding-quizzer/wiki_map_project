@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const userQueries = require('../db/queries/maps');
 
-router.use(express.json());
-
 router.get('/', (req, res) => {
   userQueries.getMaps()
     .then(maps => {

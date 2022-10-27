@@ -63,8 +63,8 @@
 
 
       <button class="add-point" type="submit">Post</button>
+      <button type="button" class="set-center">Make Center</button>
       </form>
-      <button class="set-center">Make Center</button>
       </section>
     `);
 
@@ -105,7 +105,7 @@
             });
         });
 
-        const $centerButton = $addPointSection.children('button.set-center');
+        const $centerButton = $addPointForm.children('button.set-center');
         $centerButton.on('click', function (event) {
           const data = {
             latitude: clickCoords.lat,

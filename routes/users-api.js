@@ -65,6 +65,11 @@ router.get('/:id/favorites', (req, res) => {
     });
 });
 
+router.get('/:id/favorites/names', (req, res) => {
+  userQueries.getUserFavorites(req.params.id)
+    .then(favorite => res.json(favorite));
+})
+
 router.post('/:id/favorites', (req, res) => {
   const favorite = req.body;
   userQueries.addFavorite(favorite.userId, favorite.mapID)

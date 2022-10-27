@@ -62,6 +62,8 @@ const getFavorites = (userID) => {
     });
 };
 
+
+
 const registerUser = (first_name, last_name, username, password) => {
   return db.query(`
   INSERT INTO users (first_name, last_name, username, password)

@@ -114,7 +114,10 @@ const changeMapCenter = (options) => {
   SET latitude = $2,
       longitude = $3
   WHERE id = $1
-  RETURNING *`, [options.mapID, options.latitude, options.longitude]);
+  RETURNING *`, [options.mapID, options.latitude, options.longitude])
+  .then(data => {
+    return data.rows[0];
+  })
 };
 /**
  * @param {{}} options
@@ -153,4 +156,4 @@ const userFavorites = (userID) => {
 
 userFavorites(4);
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, userFavorites};
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter,userFavorites};

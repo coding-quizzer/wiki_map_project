@@ -105,7 +105,7 @@
             });
         });
 
-        const $centerButton = $addPointForm.children('button.set-center');
+        const $centerButton = $addPointSection.children('button.set-center');
         $centerButton.on('click', function (event) {
           const data = {
             latitude: clickCoords.lat,
@@ -114,6 +114,7 @@
           };
           $.post(`/api/maps/${map_id}/center`, $.param(data))
           .then(data => {
+            console.log(data);
             centerMap(map, centerPoint, [data.latitude, data.longitude]);
           })
           .catch(err => console.error(err.message));

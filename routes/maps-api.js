@@ -91,6 +91,8 @@ router.post('/:id', (req, res) => {
 
 });
 
-router.post('/:map_id/points', (req, res) => {
+router.post('/:map_id/center', (req, res) => {
+
+  res.send('Recieved Request');
 });
 module.exports = router;

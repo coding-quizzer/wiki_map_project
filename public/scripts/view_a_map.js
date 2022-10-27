@@ -39,6 +39,7 @@
 
           }
           const $addPointForm = $(`
+    <section>
     <form id = "new-point" action="/api/maps/${map_id}" method="POST">
       <input
         type="text"
@@ -59,8 +60,11 @@
         placeholder="Photo URL"
       />
 
+
       <button class="add-point" type="submit">Post</button>
-    </form>
+      </form>
+      <button class="set-center">Make Center</button>
+      <section>
     `);
         let click_coords = [];
         const onMapClick = function (e) {
@@ -79,6 +83,7 @@
 
         $addPointForm.on('submit', function (event) {
           event.preventDefault();
+          console.log(event);
           const query = $(this).serializeArray();
           console.log($addPointForm);
           query.push(
@@ -107,7 +112,16 @@
               mapIDToPopup[pointId].openPopup();
             });
         });
+        const $centerButton = $addPointForm.children('button.set-center');
 
+        $($centerButton).on('click', function (event) {
+          console.log(event);
+          $.post(`/api/maps/${map_id}/center`, {
+            latitude: click_coords.latitude,
+            longitude: click_coords.longitude})
+          .then(data => console.log(data))
+          .catch(err => console.error(err.message));
+         });
         });
   });
 

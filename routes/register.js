@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
   getUserByUsername(username)
     .then(data => {
       console.log("SSDSSSSSSSSSSSSSSS" , data);
-      if (data === username) {
+      if (data.username === username) {
         res.status(400).send("Username has been taken, please choose a new username!");
         return;
       }

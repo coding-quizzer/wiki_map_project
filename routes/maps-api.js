@@ -92,14 +92,8 @@ router.post('/:id', (req, res) => {
 });
 
 router.post('/:map_id/center', (req, res) => {
-  console.log(req.body);
-  console.log(typeof(req.body));
-  // const data = JSON.parse(req.body)
-  //console.log(data);
-  console.log(req.body);
   userQueries.changeMapCenter(req.body)
   .then(map => {
-    console.log(map)
     res.send(map)
   })
   .catch(e => {

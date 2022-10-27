@@ -100,6 +100,7 @@ const createPoint = (options) => {
 };
 
 /**
+<<<<<<< HEAD
  * options = {
  * mapID:
  * latitude:
@@ -115,14 +116,44 @@ const changeMapCenter = (options) => {
       longitude = $3
   WHERE id = $1
   RETURNING *`, [options.mapID, options.latitude, options.longitude])
+};
+/**
+ * @param {{}} options
+ * {
+ *    title: string
+ *    imgURL: string
+ *    description: string
+ *    pointID: integer
+ * }
+ *
+ */
+
+const editPoint = (options) => {
+  return db.query(`
+    UPDATE points
+    SET title = $2,
+        img_url = $3,
+        description = $4
+    WHERE id = $1
+    RETURNING *
+  `, [options.pointID, options.title, options.imgURL, options.description])
+
   .then(data => {
     console.log(data.rows[0]);
     return data.rows[0];
   });
-
-
 };
-//changeMapCenter(1, 40.8080, -80.4040);
 
+const isFavorite = (userID, mapID) => {
+  return db.query(`
+  SELECT * FROM favorites
+  WHERE user_id = $1 AND map_id = $2
+  `, [userID, mapID])
+  .then(data => console.log("isFavorite", !!data.rows[0]))
+}
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, changeMapCenter };
+changeMapCenter(1, 40.8080, -80.4040);
+
+isFavorite(1, 2);
+
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint };

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userQueries = require('../db/queries/maps');
+const bodyParser = require('body-parser');
+
+router.use(express.json());
 
 router.get('/', (req, res) => {
   userQueries.getMaps()
@@ -92,7 +95,18 @@ router.post('/:id', (req, res) => {
 });
 
 router.post('/:map_id/center', (req, res) => {
-
-  res.send('Recieved Request');
+  console.log(req.body);
+  console.log(typeof(req.body));
+  // const data = JSON.parse(req.body)
+  //console.log(data);
+  console.log(req.body);
+  userQueries.changeMapCenter(req.body)
+  .then(map => {
+    res.send(map)
+  })
+  .catch(e => {
+    console.error(e.message);
+    res.send(e);
+  })
 });
 module.exports = router;

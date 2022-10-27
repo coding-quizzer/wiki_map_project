@@ -3,6 +3,7 @@
     const $mapTitle = $('.map_title');
     const map_id = $mapTitle.text();
     let mapData = {};
+    let clickCoords = {};
     const mapIDToPopup = {};
 
     const map = initializeMap();
@@ -66,7 +67,7 @@
       <button class="set-center">Make Center</button>
       <section>
     `);
-        let click_coords = [];
+        // let click_coords = {};
         const onMapClick = function (e) {
           const popup = L.popup()
             .setLatLng(e.latlng)
@@ -74,9 +75,9 @@
             .openOn(map);
           console.log($addPointForm);
           console.log(popup);
-          click_coords = e.latlng;
+          clickCoords = {...e.latlng};
 
-          };
+        };
 
           map.on('click', onMapClick);
           const $submitButton = $addPointForm.find('button.add-point');
@@ -87,9 +88,9 @@
           const query = $(this).serializeArray();
           console.log($addPointForm);
           query.push(
-            { name: 'latitude', value: click_coords.lat },
-            { name: 'longitude', value: click_coords.lng },
-            { name: 'map_id', value: map_id }
+            { name: 'latitude', value: clickCoords.lat },
+            { name: 'longitude', value: clickCoords.lng },
+            { name: 'mapID', value: map_id }
           );
           console.log("post map id", map_id);
           $.post(`/api/maps/${map_id}`, $.param(query))
@@ -102,27 +103,36 @@
             });
         });
 
-        $('button.point').on('click', function (event) {
-          console.log(event);
-          const pointId = ($(this).attr('point_id'));
-          $.get(`/api/maps/${map_id}/points/${pointId}`)
-            .then(data => {
-              const point = data.point;
-              map.panTo([point.latitude, point.longitude]);
-              mapIDToPopup[pointId].openPopup();
-            });
-        });
         const $centerButton = $addPointForm.children('button.set-center');
-
-        $($centerButton).on('click', function (event) {
+        console.log('clickCoords', clickCoords);
+        console.log($centerButton);
+        $centerButton.on('click', function (event) {
           console.log(event);
-          $.post(`/api/maps/${map_id}/center`, {
-            latitude: click_coords.latitude,
-            longitude: click_coords.longitude})
+          const query1 = JSON.stringify({
+            latitude: clickCoords.lat,
+            longitude: clickCoords.lng,
+             'map_id': map_id
+          });
+          const query = [{name: 'latitude', value: clickCoords.lat}, {name: 'longitude', value: clickCoords.lng}, {name: 'map_id', value: map_id}];
+
+          console.log('query',query);
+          $.post(`/api/maps/${map_id}/center`, $.param(query))
           .then(data => console.log(data))
           .catch(err => console.error(err.message));
          });
+
+         $('button.point').on('click', function (event) {
+           console.log(event);
+           const pointId = ($(this).attr('point_id'));
+           $.get(`/api/maps/${map_id}/points/${pointId}`)
+           .then(data => {
+             const point = data.point;
+             map.panTo([point.latitude, point.longitude]);
+             mapIDToPopup[pointId].openPopup();
+            });
+          });
         });
+
   });
 
   const initializeMap = () => {
@@ -148,7 +158,7 @@
   };
 
   const markCenter = (map, mapCenter) => {
-    const centerIcon = L.divIcon({ /* className: "center-icon" */ });
+    const centerIcon = L.divIcon({});
     const marker = L.marker(mapCenter, {icon: centerIcon})
     .addTo(map)
     .bindTooltip('Map center');

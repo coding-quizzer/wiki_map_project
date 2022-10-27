@@ -6,7 +6,6 @@ $(() => {
   const favMapIDs = [];
   $.get(`/api/users/${userId}/favorites`)
     .then(data => {
-      if (!userId) return $.get('/api/maps');
       console.log(data.favoriteIDs);
       favMapIDs.push(...data.favoriteIDs);
       return $.get('/api/maps');

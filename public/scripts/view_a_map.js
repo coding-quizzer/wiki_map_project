@@ -26,7 +26,7 @@
         console.log(data);
         const $pointList = $('#points');
         for (const point of points) {
-          addPointButton($pointList, point);
+          addPointButton($pointList, point, map, map_id, mapIDToPopup);
         }
         return points;
       })
@@ -92,11 +92,12 @@
             { name: 'mapID', value: map_id }
           );
           console.log("post map id", map_id);
+          console.log(query);
           $.post(`/api/maps/${map_id}`, $.param(query))
             .then(data => {
               $addPointForm[0].reset();
               console.log(data);
-              addPointButton($('#points'), data);
+              addPointButton($('#points'), data, map, map_id, mapIDToPopup);
               const newMarker = displayPoint(map, data, mapIDToPopup);
               newMarker.openPopup();
             });
@@ -118,16 +119,16 @@
           .catch(err => console.error(err.message));
          });
 
-         $('button.point').on('click', function (event) {
-           console.log(event);
-           const pointId = ($(this).attr('point_id'));
-           $.get(`/api/maps/${map_id}/points/${pointId}`)
-           .then(data => {
-             const point = data.point;
-             map.panTo([point.latitude, point.longitude]);
-             mapIDToPopup[pointId].openPopup();
-            });
-          });
+        //  $('button.point').on('click', function (event) {
+        //    console.log(event);
+        //    const pointId = ($(this).attr('point_id'));
+        //    $.get(`/api/maps/${map_id}/points/${pointId}`)
+        //    .then(data => {
+        //      const point = data.point;
+        //      map.panTo([point.latitude, point.longitude]);
+        //      mapIDToPopup[pointId].openPopup();
+        //     });
+        //   });
         });
 
   });
@@ -175,8 +176,18 @@
   }
 
 
-  const addPointButton = (pointList, point) => {
-    $('<button class="point">').attr('point_id', point.id).text(point.title).appendTo(pointList);
+  const addPointButton = (pointList, point, map, map_id, mapIDToPopup) => {
+    return $('<button class="point">').attr('point_id', point.id).text(point.title)
+    .on('click', function (event) {
+      console.log(event);
+      const pointId = ($(this).attr('point_id'));
+      $.get(`/api/maps/${map_id}/points/${pointId}`)
+      .then(data => {
+        const point = data.point;
+        map.panTo([point.latitude, point.longitude]);
+        mapIDToPopup[pointId].openPopup();
+       });
+     }).appendTo(pointList);
   };
 
 

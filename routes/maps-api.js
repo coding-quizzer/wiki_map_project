@@ -77,7 +77,7 @@ router.post('/:id', (req, res) => {
     title: pointInfo['point-name'],
     description: pointInfo['point-description'],
     imgURL: pointInfo['point-photo-url'],
-    mapID: pointInfo.map_id,
+    mapID: pointInfo.mapID,
     latitude: pointInfo.latitude,
     longitude: pointInfo.longitude
   })

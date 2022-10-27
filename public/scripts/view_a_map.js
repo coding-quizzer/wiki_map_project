@@ -3,6 +3,7 @@
     const $mapTitle = $('.map_title');
     const map_id = $mapTitle.text();
     let mapData = {};
+    let centerPoint = {};
     let clickCoords = {};
     const mapIDToPopup = {};
 
@@ -30,10 +31,13 @@
         return points;
       })
       .then(points => {
+        centerPoint = markCenter(map, [mapData.latitude, mapData.longitude])
 
-        const mapCoords = [mapData.latitude, mapData.longitude];
-        const centerMarker = markCenter(map,mapCoords);
-        map.setView(mapCoords, 13);
+        centerMap(map, centerPoint, [mapData.latitude, mapData.longitude]);
+
+        // const mapCoords = [mapData.latitude, mapData.longitude];
+        // const centerMarker = markCenter(map,mapCoords);
+        // map.setView(mapCoords, 13);
 
           for (const point of points) {
             displayPoint(map, point, mapIDToPopup);
@@ -105,14 +109,15 @@
         });
 
         const $centerButton = $addPointForm.children('button.set-center');
-        console.log('clickCoords', clickCoords);
-        console.log($centerButton);
         $centerButton.on('click', function (event) {
           const query = [{name: 'latitude', value: clickCoords.lat}, {name: 'longitude', value: clickCoords.lng}, {name: 'mapID', value: map_id}];
 
           console.log('query',query);
           $.post(`/api/maps/${map_id}/center`, $.param(query))
-          .then(data => console.log(data))
+          .then(data => {
+            console.log(data);
+            centerMap(map, centerPoint, [data.latitude, data.longitude]);
+          })
           .catch(err => console.error(err.message));
          });
 
@@ -157,7 +162,19 @@
     const marker = L.marker(mapCenter, {icon: centerIcon})
     .addTo(map)
     .bindTooltip('Map center');
-    return centerIcon;
+    return marker;
+  };
+
+  const moveCenter = (map, centerMarker, mapCenter) => {
+    console.log(centerMarker);
+    centerMarker.setLatLng(mapCenter);
+  }
+
+  const centerMap = (map, centerMarker, mapCoords) => {
+    console.log(centerMarker);
+    moveCenter(map, centerMarker, mapCoords);
+    map.setView(mapCoords, 13);
+
   }
 
 

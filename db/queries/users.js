@@ -8,7 +8,7 @@ const getUsers = () => {
 };
 
 const getUserById = (id) => {
-  return db.query('SELECT * FROM users WHERE id = $1;',[id])
+  return db.query('SELECT * FROM users WHERE id = $1;', [id])
     .then(data => {
       return data.rows[0];
     });
@@ -46,9 +46,9 @@ const addFavorite = (userId, mapId) => {
   VALUES ($1, $2)
   RETURNING *;
   `, [userId, mapId])
-  .then(data => {
-    return data.rows[0];
-  });
+    .then(data => {
+      return data.rows[0];
+    });
 };
 
 const getFavorites = (userID) => {
@@ -57,7 +57,6 @@ const getFavorites = (userID) => {
   WHERE user_id = $1
   `, [userID])
     .then(data => {
-      console.log("userFavorites", data.rows)
       return data.rows;
     });
 };
@@ -68,7 +67,6 @@ const removeFavorite = (userID, mapID) => {
   WHERE user_id = $1 AND map_id = $2
   RETURNING *
   `, [userID, mapID]).then(data => {
-    console.log('Favorite removed');
     return data.rows[0];
   });
 };

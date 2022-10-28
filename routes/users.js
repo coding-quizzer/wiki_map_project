@@ -22,10 +22,4 @@ router.get('/', (req, res) => {
   res.render('users', templateVars);
 });
 
-router.get('/:id', (req, res) => {
-  templateVars.id = req.params.id;
-  res.render('user_profile', templateVars);
-});
-
-
 module.exports = router;

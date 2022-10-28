@@ -99,6 +99,19 @@ router.post('/:map_id/center', (req, res) => {
     });
 });
 
+router.delete("/:map_id/points/:point_id", (req, res) => {
+  userQueries.deletePoint(req.params.point_id)
+    .then(point => {
+      res.send(point);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+
+});
+
 
 
 module.exports = router;

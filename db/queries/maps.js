@@ -138,4 +138,16 @@ const editPoint = (options) => {
     });
 };
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter };
+
+const deletePoint = (pointId) => {
+  return db.query(`
+    DELETE FROM points
+    WHERE id = $1
+    RETURNING *;
+  `, [pointId])
+    .then(data => {
+      return data.rows[0];
+    });
+
+};
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter, deletePoint };

@@ -34,7 +34,7 @@
         centerMap(map, centerPoint, [mapData.latitude, mapData.longitude]);
 
         for (const point of points) {
-          displayPoint(map, point, mapIDToPopup);
+          displayPoint(map, map_id, point, mapIDToPopup);
 
         }
         const $addPointForm = $(`
@@ -87,7 +87,7 @@
             .then(data => {
               $addPointForm[0].reset();
               addPointButton($('#points'), data, map, map_id, mapIDToPopup);
-              const newMarker = displayPoint(map, data, mapIDToPopup);
+              const newMarker = displayPoint(map, map_id, data, mapIDToPopup);
               newMarker.openPopup();
             });
         });
@@ -120,13 +120,28 @@
     return map;
   };
 
-  const displayPoint = (map, point, idToPopup) => {
+  const deletePoint = (map, mapID, marker, pointID) => {
+    $.ajax({
+      type: "DELETE",
+      url: `/api/maps/${mapID}/points/${pointID}`
+    }).then(data => {
+      console.log(data);
+      map.removeLayer(marker);
+      const $pointButton = $('#points').find(`[point_id='${pointID}']`).remove();
+
+    }).catch(err => console.error(err.message));
+  };
+
+  const displayPoint = (map, mapID, point, idToPopup) => {
     const marker = L.marker([point.latitude, point.longitude]).addTo(map);
-    const $popupContent = $('<section>').addClass('display-point');
+    const $popupContent = $('<section class="display-point">');
     const $thumbnail = $('<img>').attr('src', point.img_url).appendTo($popupContent);
-    const $title = $('<h4>').text(point.title);
-    const $popupHeader = $('<header>').addClass('display-point').append($thumbnail).append($title).appendTo($popupContent);
+    const $popupHeader = $('<header class="display-point>').append($thumbnail).appendTo($popupContent);
+    const $title = $('<h4>').text(point.title).appendTo($popupContent);
     const $description = $('<p>').text(point.description).appendTo($popupContent);
+    const $deleteButton =$('<button class="btn btn-outline-danger delete-point">Delete</button>').on('click', () => {
+      deletePoint(map, mapID, marker, point.id);
+    }).appendTo($popupContent);
     marker.bindPopup($popupContent[0]);
     idToPopup[point.id] = marker;
     return marker;
@@ -150,7 +165,6 @@
 
   };
 
-
   const addPointButton = (pointList, point, map, map_id, mapIDToPopup) => {
     return $('<button class="point">').attr('point_id', point.id).text(point.title)
       .on('click', function (event) {
@@ -163,9 +177,5 @@
           });
       }).appendTo(pointList);
   };
-
-
-
-
 
 }

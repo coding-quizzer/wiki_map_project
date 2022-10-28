@@ -148,6 +148,6 @@ const deletePoint = (pointId) => {
     .then(data => {
       return data.rows[0];
     });
-
 };
+
 module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter, deletePoint };

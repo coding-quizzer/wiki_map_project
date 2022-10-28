@@ -52,10 +52,8 @@ router.get('/:map_id/points/:point_id', (req, res) => {
 });
 
 
-
-
 router.post('/', (req, res) => {
-  const options = { ...req.body, latitude: 62.4748444, longitude: -114.4790338 };
+  const options = { ...req.body, latitude: 43.655952, longitude: -79.381050 };
   const userId = req.session.userId;
   userQueries.createMap(options, userId || 1)
     .then(map => {
@@ -68,50 +66,65 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/:id', (req, res) => {
-  const pointInfo = req.body;
-  userQueries.createPoint({
-    title: pointInfo['point-name'],
-    description: pointInfo['point-description'],
-    imgURL: pointInfo['point-photo-url'],
-    mapID: pointInfo.mapID,
-    latitude: pointInfo.latitude,
-    longitude: pointInfo.longitude
-  })
-    .then(point => {
-      res.send(point);
-    })
-    .catch(e => {
-      console.error(e.message);
-      res.send(e);
-    });
+router.post('/:id', (req, res, next) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    next();
+  } else {
 
+    const pointInfo = req.body;
+    userQueries.createPoint({
+      title: pointInfo['point-name'],
+      description: pointInfo['point-description'],
+      imgURL: pointInfo['point-photo-url'],
+      mapID: pointInfo.mapID,
+      latitude: pointInfo.latitude,
+      longitude: pointInfo.longitude
+    })
+      .then(point => {
+        res.send(point);
+      })
+      .catch(e => {
+        console.error(e.message);
+        res.send(e);
+      });
+  }
 });
 
-router.post('/:map_id/center', (req, res) => {
-  userQueries.changeMapCenter(req.body)
-    .then(map => {
-      res.send(map);
-    })
-    .catch(e => {
-      console.error(e.message);
-      res.send(e);
-    });
+router.post('/:map_id/center', (req, res, next) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    next();
+  } else {
+
+    userQueries.changeMapCenter(req.body)
+      .then(map => {
+        res.send(map);
+      })
+      .catch(e => {
+        console.error(e.message);
+        res.send(e);
+      });
+  }
 });
 
-router.delete("/:map_id/points/:point_id", (req, res) => {
-  userQueries.deletePoint(req.params.point_id)
-    .then(point => {
-      res.send(point);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+router.delete("/:map_id/points/:point_id", (req, res, next) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    next();
+  } else {
 
+    userQueries.deletePoint(req.params.point_id)
+      .then(point => {
+        res.send(point);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  }
 });
-
 
 
 module.exports = router;

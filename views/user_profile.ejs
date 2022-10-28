@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Users</title>
+  <title>Profile Page</title>
 
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
@@ -10,14 +10,13 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
-  <!-- CSS only -->
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
     crossorigin="anonymous">
-
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
@@ -30,20 +29,11 @@
 <body>
   <%- include('partials/_header') %>
 <header class="head">
-  <h1>My Profile</h1>
-  <h1 id="profile-title"><%= userId %></h1>
-</header>
 
-  <div class="user-maps">
-    <section class="fav">
-      <h2>Favourites</h2>
-      <ul id="favorites"></ul>
-    </section>
-    <section class="mymaps">
-      <h2>My Maps</h2>
-      <ul id="my-maps"></ul>
-    </section>
-  </div>
+  <h1>User Profile</h1>
+  <ul id="users"></ul>
+
+</header>
 </body>
 
 </html>

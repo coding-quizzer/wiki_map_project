@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const db = require('../db/connection');
 const { getUserByUsername } = require('../db/queries/users');
 
@@ -23,7 +24,11 @@ router.post('/', (req, res) => {
   }
   getUserByUsername(username)
     .then(data => {
-      if (!data || data.password !== password) {
+      if (!data || !data.password) {
+        res.status(400).send("Incorrect Username or Password");
+        return;
+      }
+      if (!bcrypt.compareSync(password, data.password)) {
         res.status(400).send("Incorrect Username or Password");
         return;
       }

@@ -4,6 +4,7 @@ require('dotenv').config();
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 

@@ -9,7 +9,6 @@ $(() => {
   })
     .then((response) => {
       const user = response.user;
-      console.log(user);
       const $userHeading = $('#profile-title').text(user.username);
     });
 
@@ -45,12 +44,3 @@ $(() => {
 
 
 });
-
-// $usersList.empty();
-// for(const user of response.users) {
-//   const { first_name, last_name, username } = user;
-//   const fullname = `${first_name} ${last_name}`;
-//   const favorites = `${favorites}`;
-//   const myMaps = `${maps_id}`
-//   $(`<li class="user">`).text(`${fullname} has the username ${username}`).appendTo($usersList);
-// }

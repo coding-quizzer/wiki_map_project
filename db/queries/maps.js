@@ -6,7 +6,6 @@ const getMaps = () => {
   FROM maps
   JOIN users ON user_id = users.id`)
     .then(data => {
-      console.log(data.rows);
       return data.rows;
     });
 };
@@ -19,7 +18,6 @@ const getMap = (id) => {
     WHERE id = $1
     `, [id])
     .then(data => {
-      console.log(data.rows[0]);
       return data.rows[0];
     });
 };
@@ -33,7 +31,6 @@ const getMapPoints = (id) => {
   WHERE map_id = $1
   `, [id])
     .then(data => {
-      console.log(data.rows);
       return data.rows;
     });
 };
@@ -61,15 +58,12 @@ const getMapPoint = (mapId, pointId) => {
  **/
 
 const createMap = (options, user_id) => {
-  console.log('options', options);
-  console.log([options.name, user_id, options.latitude, options.longitude, options.imgURL]);
   return db.query(`
   INSERT INTO maps (name, user_id, latitude, longitude, img_url)
   VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
   `, [options.name, user_id, options.latitude, options.longitude, options.imgURL])
     .then(data => {
-      console.log(data.rows[0]);
       return data.rows[0];
     });
 
@@ -89,13 +83,11 @@ const createMap = (options, user_id) => {
 
 
 const createPoint = (options) => {
-  console.log(options);
   return db.query(`
   INSERT INTO points (title, img_url, description, map_id, latitude, longitude)
   VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING *;` , [options.title, options.imgURL, options.description, options.mapID, options.latitude, options.longitude])
     .then(data => {
-      console.log(data.rows[0]);
       return data.rows[0];
     });
 };
@@ -116,9 +108,9 @@ const changeMapCenter = (options) => {
       longitude = $3
   WHERE id = $1
   RETURNING *`, [options.mapID, options.latitude, options.longitude])
-  .then(data => {
-    return data.rows[0];
-  })
+    .then(data => {
+      return data.rows[0];
+    });
 };
 /**
  * @param {{}} options
@@ -142,9 +134,8 @@ const editPoint = (options) => {
   `, [options.pointID, options.title, options.imgURL, options.description])
 
     .then(data => {
-      console.log(data.rows[0]);
       return data.rows[0];
     });
 };
 
-module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter};
+module.exports = { getMaps, getMap, getMapPoints, getMapPoint, createMap, createPoint, editPoint, changeMapCenter };

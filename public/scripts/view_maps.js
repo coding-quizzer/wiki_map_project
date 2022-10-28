@@ -1,22 +1,19 @@
 $(() => {
 
   const userId = $('#title').text();
-  console.log(userId);
   $('#title').text("VIEW ALL MAPS");
   const favMapIDs = [];
   $.get(`/api/users/${userId}/favorites`)
     .then(data => {
-      console.log(data.favoriteIDs);
       favMapIDs.push(...data.favoriteIDs);
       return $.get('/api/maps');
     })
     .catch(err => {
-      console.error(err.message)
+      console.error(err.message);
       return $.get('/api/maps');
     })
     .then((response) => {
       const maps = response.maps;
-      // console.log(maps);
       for (let map of maps) {
 
         const $mapItem = $(`
@@ -40,7 +37,7 @@ $(() => {
         const $mapName = $mapItem.find('.map-name').text(map.name);
         const $createdBy = $mapItem.find('.createdBy').text('Created by: ' + map.username);
         const $favButton = $mapItem.find('.fa-star').attr('map_id', map.id);
-        if (favMapIDs.includes(map.id)){
+        if (favMapIDs.includes(map.id)) {
           $favButton.addClass('favorited');
         }
 
@@ -49,8 +46,7 @@ $(() => {
 
 
         $favButton.on('click', function (event) {
-          $( this ).parents('.maps-view')
-          console.log(this);
+          $(this).parents('.maps-view');
           event.preventDefault();
           event.stopPropagation();
           if (!($(this).hasClass('favorited'))) {
@@ -58,19 +54,17 @@ $(() => {
               userId,
               mapID: map.id
             })
-            .then(data => {
-              console.log(data);
-              $(this).addClass('favorited');
-            });
+              .then(data => {
+                $(this).addClass('favorited');
+              });
           } else {
             $.ajax({
               type: 'DELETE',
               url: `/api/users/${userId}/favorites/${map.id}`
             })
-            .then(response => {
-              console.log(response);
-              $(this).removeClass('favorited');
-            })
+              .then(response => {
+                $(this).removeClass('favorited');
+              });
 
           }
         });

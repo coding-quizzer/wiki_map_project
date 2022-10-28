@@ -9,21 +9,19 @@
 
     const map = initializeMap();
 
-    console.log(map_id);
 
     $.ajax({
       method: 'GET',
       url: `/api/maps/${map_id}`
     })
       .then(response => {
-        mapData = {...response.map};
+        mapData = { ...response.map };
         $mapTitle.text(mapData.name);
         $('title').text(mapData.name);
         return $.get(`/api/maps/${map_id}/points`);
       })
       .then(data => {
         const points = data.points;
-        console.log(data);
         const $pointList = $('#points');
         for (const point of points) {
           addPointButton($pointList, point, map, map_id, mapIDToPopup);
@@ -31,15 +29,15 @@
         return points;
       })
       .then(points => {
-        centerPoint = markCenter(map, [mapData.latitude, mapData.longitude])
+        centerPoint = markCenter(map, [mapData.latitude, mapData.longitude]);
 
         centerMap(map, centerPoint, [mapData.latitude, mapData.longitude]);
 
-          for (const point of points) {
-            displayPoint(map, point, mapIDToPopup);
+        for (const point of points) {
+          displayPoint(map, point, mapIDToPopup);
 
-          }
-          const $addPointForm = $(`
+        }
+        const $addPointForm = $(`
     <form id = "new-point" action="/api/maps/${map_id}" method="POST">
       <input
         type="text"
@@ -71,32 +69,23 @@
             .setLatLng(e.latlng)
             .setContent($addPointForm[0])
             .openOn(map);
-          console.log($addPointForm);
-          console.log(popup);
-          clickCoords = {...e.latlng};
-          console.log(clickCoords);
-
+          clickCoords = { ...e.latlng };
         };
 
-          map.on('click', onMapClick);
-          const $submitButton = $addPointForm.find('button.add-point');
+        map.on('click', onMapClick);
+        const $submitButton = $addPointForm.find('button.add-point');
 
         $addPointForm.on('submit', function (event) {
           event.preventDefault();
-          console.log(event);
           const query = $(this).serializeArray();
-          console.log(this);
           query.push(
             { name: 'latitude', value: clickCoords.lat },
             { name: 'longitude', value: clickCoords.lng },
             { name: 'mapID', value: map_id }
           );
-          console.log("post map id", map_id);
-          console.log(query);
           $.post(`/api/maps/${map_id}`, $.param(query))
             .then(data => {
               $addPointForm[0].reset();
-              console.log(data);
               addPointButton($('#points'), data, map, map_id, mapIDToPopup);
               const newMarker = displayPoint(map, data, mapIDToPopup);
               newMarker.openPopup();
@@ -111,25 +100,13 @@
             mapID: map_id
           };
           $.post(`/api/maps/${map_id}/center`, $.param(data))
-          .then(data => {
-            console.log(data);
-            centerMap(map, centerPoint, [data.latitude, data.longitude]);
-            map.closePopup();
-          })
-          .catch(err => console.error(err.message));
-         });
-
-        //  $('button.point').on('click', function (event) {
-        //    console.log(event);
-        //    const pointId = ($(this).attr('point_id'));
-        //    $.get(`/api/maps/${map_id}/points/${pointId}`)
-        //    .then(data => {
-        //      const point = data.point;
-        //      map.panTo([point.latitude, point.longitude]);
-        //      mapIDToPopup[pointId].openPopup();
-        //     });
-        //   });
+            .then(data => {
+              centerMap(map, centerPoint, [data.latitude, data.longitude]);
+              map.closePopup();
+            })
+            .catch(err => console.error(err.message));
         });
+      });
 
   });
 
@@ -141,7 +118,7 @@
     }).addTo(map);
 
     return map;
-  }
+  };
 
   const displayPoint = (map, point, idToPopup) => {
     const marker = L.marker([point.latitude, point.longitude]).addTo(map);
@@ -157,37 +134,34 @@
 
   const markCenter = (map, mapCenter) => {
     const centerIcon = L.divIcon({});
-    const marker = L.marker(mapCenter, {icon: centerIcon})
-    .addTo(map)
-    .bindTooltip('Map center');
+    const marker = L.marker(mapCenter, { icon: centerIcon })
+      .addTo(map)
+      .bindTooltip('Map center');
     return marker;
   };
 
   const moveCenter = (map, centerMarker, mapCenter) => {
-    console.log(centerMarker);
     centerMarker.setLatLng(mapCenter);
-  }
+  };
 
   const centerMap = (map, centerMarker, mapCoords) => {
-    console.log(centerMarker);
     moveCenter(map, centerMarker, mapCoords);
     map.setView(mapCoords, 13);
 
-  }
+  };
 
 
   const addPointButton = (pointList, point, map, map_id, mapIDToPopup) => {
     return $('<button class="point">').attr('point_id', point.id).text(point.title)
-    .on('click', function (event) {
-      console.log(event);
-      const pointId = ($(this).attr('point_id'));
-      $.get(`/api/maps/${map_id}/points/${pointId}`)
-      .then(data => {
-        const point = data.point;
-        map.panTo([point.latitude, point.longitude]);
-        mapIDToPopup[pointId].openPopup();
-       });
-     }).appendTo(pointList);
+      .on('click', function (event) {
+        const pointId = ($(this).attr('point_id'));
+        $.get(`/api/maps/${map_id}/points/${pointId}`)
+          .then(data => {
+            const point = data.point;
+            map.panTo([point.latitude, point.longitude]);
+            mapIDToPopup[pointId].openPopup();
+          });
+      }).appendTo(pointList);
   };
 
 

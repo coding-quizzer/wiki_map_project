@@ -4,7 +4,6 @@ require('dotenv').config();
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 
@@ -59,7 +58,7 @@ app.use('/register', registerRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.redirect('/maps');
 });
 
 app.listen(PORT, () => {

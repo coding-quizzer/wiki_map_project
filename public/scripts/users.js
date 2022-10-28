@@ -19,7 +19,8 @@ $(() => {
     .then(favorites => {
       const $favorites = $('#favorites');
       for (const favorite of favorites) {
-        $(`<li class="favorite">`).text(`${favorite.name}`).appendTo($favorites);
+        const $favLink = $(`<a>`).text(`${favorite.name}`).attr('href', `/maps/${favorite.id}`)
+        $(`<li class="favorite">`).append($favLink).appendTo($favorites);
       }
     })
     .catch(err => {
@@ -34,7 +35,8 @@ $(() => {
       const maps = response.maps;
       const $maps = $('#my-maps');
       for (const map of maps) {
-        $(`<li class="map">`).text(`${map.name}`).appendTo($maps);
+        const $mapLink = $(`<a>`).text(`${map.name}`).attr('href', `/maps/${map.id}`)
+        $(`<li class="map">`).append($mapLink).appendTo($maps);
       }
     })
     .catch(err => {

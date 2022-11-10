@@ -21,3 +21,7 @@ Wikimap is a full-stack RESTful web app that allows users to share maps of their
 - Express
 - Morgan
 - SASS
+
+## Known Bugs
+ - Logged in users can edit any map, not just their own
+ - Users who are not logged in can use the form to add a point, but when they submit, the form disappears without explanation and no point appears

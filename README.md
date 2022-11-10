@@ -9,6 +9,10 @@ Wikimap is a full-stack RESTful web app that allows users to share maps of their
 3. Go to <http://localhost:8080/> in your browser
 
 ## Screenshots
+!['Screenshot of page with all maps'](https://github.com/coding-quizzer/wiki_map_project/blob/master/docs/view-all-maps.png?raw=true)
+!['Screenshot of form for adding a point'](https://github.com/coding-quizzer/wiki_map_project/blob/master/docs/add-a-point.png?raw=true)
+!['Screenshot of a selected map point'](https://github.com/coding-quizzer/wiki_map_project/blob/master/docs/view-map-point.png?raw=true)
+!['Screenshot of user profile'](https://github.com/coding-quizzer/wiki_map_project/blob/master/docs/profile-page.png?raw=true)
 
 ## Dependencies
 
